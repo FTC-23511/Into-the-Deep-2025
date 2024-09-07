@@ -1,0 +1,21 @@
+Circle: B
+Cross: A
+Triangle: Y
+Square: X
+
+operator:
+x = go to backdrop (deposit)
+o = retract deposit
+left trigger = cycle counterclockwise on wrist
+right trigger = cycle clockwise on wrist
+left bumper = toggle left claw
+right bumper = toggle right claw
+press down on right joystick = open both claws
+press down on left joystick = close both claws
+
+dpad up = increase pixel backdrop slides height
+dpad down = decrease pixel backdrop slide height
+dpad left =
+dpad right =
+left joystick = manual control for deposit slides (up = increase, down = decrease)
+right joystick =
