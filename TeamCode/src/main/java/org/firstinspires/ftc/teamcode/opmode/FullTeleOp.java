@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.DriveMode;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 import static org.firstinspires.ftc.teamcode.hardware.Robot.setMecanumSpeeds;
+import static org.firstinspires.ftc.teamcode.hardware.Robot.testSetMecanumSpeeds;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -69,6 +70,7 @@ public class FullTeleOp extends CommandOpMode {
         double speedMultiplier = (driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) * 0.8) + 0.2;
 
         setMecanumSpeeds(driver.getLeftX(), driver.getLeftY(), driver.getRightX(), speedMultiplier);
+//        testSetMecanumSpeeds(driver, speedMultiplier);
 
         if (driver.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
             robot.imu.resetYaw();

@@ -172,7 +172,7 @@ public class Robot {
     }
 
     public static void testSetMecanumSpeeds(GamepadEx gamepad, double speedMultiplier) {
-        double leftY = gamepad.getLeftY();; // Remember, Y stick value is reversed
+        double leftY = gamepad.getLeftY(); // Remember, Y stick value is reversed
         double leftX = gamepad.getLeftX(); // Counteract imperfect strafing
         double rightX = gamepad.getRightX();
 
