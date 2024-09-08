@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.tuning.swerve;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.DriveMode;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
