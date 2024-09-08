@@ -49,19 +49,19 @@ public class color extends LinearOpMode {
                     color = "red";
                 } else if (green >= red && green >= blue) {
                     color = "green";
-                } else if (blue >= red && blue >= green) {
-                    color = "blue";
                 } else {
-                    color = "";
+                    color = "blue"; // Set default to be blue if on blue side, set default to be red if on red side.
                 }
             }
 
             telemetry.addData("color", color);
 
-//            int alpha = colorSensor.alpha(); //0 - Transparent, 255 - Opaque
-//            int combined = colorSensor.argb();
-//            telemetry.addData("alpha", alpha);
-//            telemetry.addData("combined", combined);
+            /* Misc Color Sensor Tools:
+            int alpha = colorSensor.alpha(); //0 - Transparent, 255 - Opaque
+            int combined = colorSensor.argb();
+            telemetry.addData("alpha", alpha);
+            telemetry.addData("combined", combined);
+            */
 
             telemetry.addData("loop time (ms)", timer.milliseconds());
             telemetry.update();
