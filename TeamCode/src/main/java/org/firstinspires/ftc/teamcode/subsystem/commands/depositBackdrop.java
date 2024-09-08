@@ -18,7 +18,8 @@ public class depositBackdrop extends CommandBase {
     public void initialize() {
         deposit.setSlideTarget(deposit.pixelHeight * BACKDROP_INCREMENTAL_HEIGHT);
         deposit.setClaw(false, false);
-        deposit.updateWrist(4);
+        deposit.wristIndex = 3;
+        deposit.moveWrist();
         deposit.setArmTransfer(false);
     }
 
