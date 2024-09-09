@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -75,7 +75,7 @@ public class Robot {
     public CoaxialSwerveModule bL;
     public CoaxialSwerveModule bR;
 
-    public DistanceSensor intakeDistanceSensor;
+    public RevColorSensorV3 colorSensor;
 
     private final Object imuLock = new Object();
     @GuardedBy("imuLock")
@@ -168,7 +168,7 @@ public class Robot {
         perpendicularPod = new MotorEx(hardwareMap, "backLeftMotor").encoder;
         perpendicularPod.setDirection(Motor.Direction.REVERSE);
 
-        intakeDistanceSensor = hardwareMap.get(DistanceSensor.class, "intakeDistanceSensor");
+        colorSensor = (RevColorSensorV3) hardwareMap.colorSensor.get("colorSensor");
 
         // IMU orientation
         imu = hardwareMap.get(BHI260IMU.class, "imu");
