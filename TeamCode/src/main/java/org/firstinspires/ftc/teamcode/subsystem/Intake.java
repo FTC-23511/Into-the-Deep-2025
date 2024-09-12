@@ -90,7 +90,7 @@ public class Intake extends SubsystemBase {
         }
     }
 
-    public boolean pixelDetected() {
+    public boolean sampleDetected() {
         if (intakeState == IntakeState.ON) {
             if (loopNumber > INTAKE_DISTANCE_SENSOR_POLLING) {
                 return robot.colorSensor.getDistance(DistanceUnit.CM) < PIXEL_DISTANCE;
