@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import static org.firstinspires.ftc.teamcode.hardware.Globals.driveMode;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.Motor;

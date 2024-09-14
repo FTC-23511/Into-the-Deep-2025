@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.tuning.servo;
 
-import static org.firstinspires.ftc.teamcode.hardware.Globals.DriveMode;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.driveMode;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 import static org.firstinspires.ftc.teamcode.hardware.System.checkButton;
 import static org.firstinspires.ftc.teamcode.hardware.System.round;
 import static org.firstinspires.ftc.teamcode.tuning.example.ExampleConstants.LEFT_SERVO_POS;
