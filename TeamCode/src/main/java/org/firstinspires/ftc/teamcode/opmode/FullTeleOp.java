@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
-import static org.firstinspires.ftc.teamcode.hardware.Robot.setMecanumSpeeds;
-import static org.firstinspires.ftc.teamcode.hardware.Robot.testSetMecanumSpeeds;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -42,7 +40,7 @@ public class FullTeleOp extends CommandOpMode {
         robot.init(hardwareMap);
 
         // Initialize subsystems
-        register(robot.deposit, robot.intake, robot.swerveDrivetrain);
+        register(robot.deposit, robot.intake);
         robot.deposit.initTeleOp();
 
         driver = new GamepadEx(gamepad1);
