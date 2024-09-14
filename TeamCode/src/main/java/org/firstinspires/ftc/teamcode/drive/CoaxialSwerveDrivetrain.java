@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive;
 
 import static com.arcrobotics.ftclib.kinematics.wpilibkinematics.SwerveDriveKinematics.normalizeWheelSpeeds;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.LENGTH;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAXIMUM_MODULE_SPEED;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.WIDTH;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Translation2d;

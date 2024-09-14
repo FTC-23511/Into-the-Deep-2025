@@ -1,12 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
-import static org.firstinspires.ftc.teamcode.hardware.Globals.DriveMode;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.STRAFE_MULTIPLIER;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.TURN_MULTIPLIER;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.driveMode;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 import static org.firstinspires.ftc.teamcode.hardware.Robot.setMecanumSpeeds;
 import static org.firstinspires.ftc.teamcode.hardware.Robot.testSetMecanumSpeeds;
 

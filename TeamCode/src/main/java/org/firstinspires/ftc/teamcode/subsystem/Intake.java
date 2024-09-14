@@ -1,13 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
-import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_DISTANCE_SENSOR_POLLING;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_POWER;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_REVERSE_POWER;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.PIXEL_DISTANCE;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.STACK_HEIGHTS;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.TRAY_INTAKE;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.TRAY_TRANSFER;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
