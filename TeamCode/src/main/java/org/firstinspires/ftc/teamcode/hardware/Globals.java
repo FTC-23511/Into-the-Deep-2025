@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous
 @Config
 public class Globals {
     public enum OpModeType {
