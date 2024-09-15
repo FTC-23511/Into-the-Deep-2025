@@ -31,7 +31,7 @@ public class LimeLight extends LinearOpMode {
 
         telemetry.setMsTransmissionInterval(11);
 
-        limelight.pipelineSwitch(0);
+        limelight.pipelineSwitch(1);
 
         limelight.start();
 
