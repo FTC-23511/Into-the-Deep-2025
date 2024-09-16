@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
+import static org.firstinspires.ftc.teamcode.hardware.Robot.setMecanumSpeeds;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -83,8 +84,8 @@ public class OldTeleOp extends CommandOpMode {
         robot.swerveDrivetrain.update(chassisSpeeds);
 
         // For Mecanum:
-        //setMecanumSpeeds(driver.getLeftX(), driver.getLeftY(), driver.getRightX(), speedMultiplier);
-        //testSetMecanumSpeeds(driver, speedMultiplier);
+        setMecanumSpeeds(driver.getLeftX(), driver.getLeftY(), driver.getRightX(), speedMultiplier);
+//        testSetMecanumSpeeds(driver, speedMultiplier);
 
         // Driver buttons
         if (driver.wasJustPressed(GamepadKeys.Button.A)) {
