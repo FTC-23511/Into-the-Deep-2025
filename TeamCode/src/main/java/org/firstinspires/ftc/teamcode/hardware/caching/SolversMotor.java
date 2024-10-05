@@ -35,6 +35,12 @@ public class SolversMotor {
         return(motor.getCurrentPosition());
     }
 
+    public void resetEncoder() {
+        DcMotor.RunMode oldMode = motor.getMode();
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(oldMode);
+    }
+
     public void setDirection(DcMotorSimple.Direction direction) {
         this.motor.setDirection(direction);
     }

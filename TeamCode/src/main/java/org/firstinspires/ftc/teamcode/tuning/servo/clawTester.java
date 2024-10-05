@@ -6,7 +6,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.driveMode;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
 import static org.firstinspires.ftc.teamcode.hardware.System.checkButton;
 import static org.firstinspires.ftc.teamcode.hardware.System.round;
-import static org.firstinspires.ftc.teamcode.tuning.example.ExampleConstants.CENTER_SERVO_POS;
+import static org.firstinspires.ftc.teamcode.tuning.example.ExampleConstants.*;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -34,8 +34,6 @@ public class clawTester extends OpMode {
         robot.init(hardwareMap);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        robot.centerServo.setPosition(CENTER_SERVO_POS);
     }
 
     @Override
@@ -46,22 +44,49 @@ public class clawTester extends OpMode {
             CENTER_SERVO_POS += 0.01;
         } else if (gamepad1.dpad_down && checkButton(currentGamepad1, "dpad_down")) {
             CENTER_SERVO_POS -= 0.01;
-        } else if (gamepad1.dpad_right  && checkButton(currentGamepad1, "dpad_right")) {
+        } else if (gamepad1.dpad_right && checkButton(currentGamepad1, "dpad_right")) {
             CENTER_SERVO_POS += 0.01;
         } else if (gamepad1.dpad_left && checkButton(currentGamepad1, "dpad_left")) {
             CENTER_SERVO_POS -= 0.01;
         }
 
-        if (gamepad1.square || gamepad1.cross || gamepad1.triangle || gamepad1.circle) {
-            robot.centerServo.setPosition(CENTER_SERVO_POS);
-        }
-
         CENTER_SERVO_POS = Math.max(Math.min(CENTER_SERVO_POS, 1), 0);
+
+        // If left joystick is down save it to that value to be used later
+        if (gamepad1.square) {
+            if (gamepad1.left_stick_button) {
+                SQUARE_POS = CENTER_SERVO_POS;
+            } else {
+                robot.centerServo.setPosition(SQUARE_POS);
+            }
+        } else if (gamepad1.circle) {
+            if (gamepad1.left_stick_button) {
+                CIRCLE_POS = CENTER_SERVO_POS;
+            } else {
+                robot.centerServo.setPosition(CIRCLE_POS);
+            }
+        } else if (gamepad1.triangle) {
+            if (gamepad1.left_stick_button) {
+                TRIANGLE_POS = CENTER_SERVO_POS;
+            } else {
+                robot.centerServo.setPosition(TRIANGLE_POS);
+            }
+        } else if (gamepad1.x) {
+            if (gamepad1.left_stick_button) {
+                X_POS = CENTER_SERVO_POS;
+            } else {
+                robot.centerServo.setPosition(X_POS);
+            }
+        }
 
         currentGamepad1.copy(gamepad1);
 
         telemetry.addData("centerServo getPosition", robot.centerServo.getPosition());
         telemetry.addData("centerServoPos", round(CENTER_SERVO_POS, 2));
+        telemetry.addData("trianglePos", round(TRIANGLE_POS, 2));
+        telemetry.addData("squarePos", round(SQUARE_POS, 2));
+        telemetry.addData("xPos", round(X_POS, 2));
+        telemetry.addData("circlePos", round(CIRCLE_POS, 2));
         telemetry.update();
 
         // DO NOT REMOVE! Removing this will return stale data since bulk caching is on Manual mode

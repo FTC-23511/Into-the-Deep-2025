@@ -29,8 +29,6 @@ public class singleServoTester extends OpMode {
         robot.init(hardwareMap);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        robot.centerServo.setPosition(CENTER_SERVO_POS);
     }
 
     @Override
