@@ -6,16 +6,12 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.commandbase.Drive;
 import org.firstinspires.ftc.teamcode.hardware.caching.SolversMotor;
 import org.firstinspires.ftc.teamcode.hardware.caching.SolversServo;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
@@ -42,10 +38,6 @@ public class Robot {
     public SolversServo leftDepositPivot;
     public SolversServo rightDepositPivot;
     public SolversServo depositClaw;
-    public SolversServo depositWrist;
-    public SolversServo leftHang;
-    public SolversServo gearboxSwitcher;
-    public SolversServo rightHang;
 
     public Motor.Encoder liftEncoder;
     public Motor.Encoder extensionEncoder;
@@ -60,11 +52,7 @@ public class Robot {
 
     public Deposit deposit;
     public Intake intake;
-    public Drive drive;
-
     public Follower follower;
-
-    public IMU imu;
 
     private static Robot instance = new Robot();
     public boolean enabled;
@@ -121,22 +109,15 @@ public class Robot {
         leftDepositPivot = new SolversServo(hardwareMap.get(Servo.class, "leftDepositPivot"), 0.01);
         rightDepositPivot = new SolversServo(hardwareMap.get(Servo.class, "rightDepositPivot"), 0.01);
         depositClaw = new SolversServo(hardwareMap.get(Servo.class, "depositClaw"), 0.01);
-        depositWrist = new SolversServo(hardwareMap.get(Servo.class, "depositWrist"), 0.01);
-        leftHang = new SolversServo(hardwareMap.get(Servo.class, "leftHang"), 0.01);
-        rightHang = new SolversServo(hardwareMap.get(Servo.class, "rightHang"), 0.01);
-        gearboxSwitcher = new SolversServo(hardwareMap.get(Servo.class, "gearboxSwitcher"), 0.01);
 
         leftIntakePivot.setDirection(Servo.Direction.REVERSE);
         leftDepositPivot.setDirection(Servo.Direction.REVERSE);
-        leftHang.setDirection(Servo.Direction.REVERSE);
 
         colorSensor = (RevColorSensorV3) hardwareMap.colorSensor.get("colorSensor");
 
         colorSensor.enableLed(true);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-
-        initializeImu(hardwareMap);
 
         // Bulk reading enabled!
         // AUTO mode will bulk read by default and will redo and clear cache once the exact same read is done again
@@ -152,7 +133,6 @@ public class Robot {
 
         intake = new Intake();
         deposit = new Deposit();
-        drive = new Drive();
         follower = new Follower(hardwareMap);
         follower.setStartingPose(new Pose(0, 0, 0));
 
@@ -169,31 +149,8 @@ public class Robot {
     public void initHasMovement() {
         deposit.init();
         intake.init();
-        drive.init();
 
         robotState = RobotState.MIDDLE_RESTING;
-    }
-    public double getYawDegrees() {
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
-    public double getPitchDegrees() {
-        return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
-    }
-    public double getRollDegrees() {
-        return imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
-    }
-
-    public void resetYaw() {
-        imu.resetYaw();
-    }
-
-    public void initializeImu(HardwareMap hardwareMap) {
-        // IMU orientation
-        imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                RevHubOrientationOnRobot.UsbFacingDirection.UP));
-        imu.initialize(parameters);
     }
 
     public enum RobotState {
