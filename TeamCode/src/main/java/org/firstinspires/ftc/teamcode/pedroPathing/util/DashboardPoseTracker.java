@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.util;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.PoseUpdater;
+
+import java.util.ArrayList;
 
 /**
  * This is the DashboardPoseTracker class. This tracks the pose history of the robot through a

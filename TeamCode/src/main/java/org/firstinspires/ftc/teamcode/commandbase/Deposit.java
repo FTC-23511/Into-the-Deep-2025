@@ -31,18 +31,7 @@ public class Deposit extends SubsystemBase {
         SPECIMEN_INTAKE
     }
 
-    public enum DepositWristState {
-        SCORING,
-        FRONT_SPECIMEN_SCORING,
-        BACK_SPECIMEN_SCORING,
-        FRONT_SPECIMEN_INTAKE,
-        BACK_SPECIMEN_INTAKE,
-        TRANSFER,
-        MIDDLE_HOLD,
-    }
-
     public static DepositPivotState depositPivotState;
-    public static DepositWristState depositWristState;
 
     public void init() {
         slidePIDF.setTolerance(12, 10);
@@ -124,34 +113,6 @@ public class Deposit extends SubsystemBase {
         }
 
         Deposit.depositPivotState = depositPivotState;
-    }
-
-    public void setWrist(DepositWristState depositWristState) {
-        switch (depositWristState) {
-            case SCORING:
-                robot.depositWrist.setPosition(WRIST_SCORING);
-                break;
-            case FRONT_SPECIMEN_SCORING:
-                robot.depositWrist.setPosition(WRIST_FRONT_SPECIMEN_SCORING);
-                break;
-            case BACK_SPECIMEN_SCORING:
-                robot.depositWrist.setPosition(WRIST_BACK_SPECIMEN_SCORING);
-                break;
-            case FRONT_SPECIMEN_INTAKE:
-                robot.depositWrist.setPosition(WRIST_FRONT_SPECIMEN_INTAKE);
-                break;
-            case BACK_SPECIMEN_INTAKE:
-                robot.depositWrist.setPosition(WRIST_BACK_SPECIMEN_INTAKE);
-                break;
-            case TRANSFER:
-                robot.depositWrist.setPosition(WRIST_TRANSFER);
-                break;
-            case MIDDLE_HOLD:
-                robot.depositWrist.setPosition(WRIST_MIDDLE_HOLD);
-                break;
-        }
-
-        Deposit.depositWristState = depositWristState;
     }
 
     @Override

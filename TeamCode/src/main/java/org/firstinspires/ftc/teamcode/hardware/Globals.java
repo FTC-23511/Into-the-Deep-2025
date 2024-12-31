@@ -68,15 +68,6 @@ public class Globals {
     public static double DEPOSIT_CLAW_OPEN_POS = 0.65;
     public static double DEPOSIT_CLAW_CLOSE_POS = 0.4;
 
-    // Deposit Wrist
-    public static double WRIST_SCORING = 0.5;
-    public static double WRIST_FRONT_SPECIMEN_SCORING = 0.5;
-    public static double WRIST_BACK_SPECIMEN_SCORING = 0.5;
-    public static double WRIST_FRONT_SPECIMEN_INTAKE = 0.5;
-    public static double WRIST_BACK_SPECIMEN_INTAKE = 0.5;
-    public static double WRIST_TRANSFER = 0.5;
-    public static double WRIST_MIDDLE_HOLD = 0.5;
-
     // Deposit Slides
     public static double MAX_SLIDES_EXTENSION = 2050;
     public static double SLIDES_PIVOT_READY_EXTENSION = 400;

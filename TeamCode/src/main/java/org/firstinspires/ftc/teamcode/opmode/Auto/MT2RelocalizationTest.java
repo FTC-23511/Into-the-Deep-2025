@@ -37,8 +37,8 @@ public class MT2RelocalizationTest extends CommandOpMode {
     @Override
     public void initialize() {
         // Must have for all opModes
-        opModeType = Globals.OpModeType.AUTO;
-        depositInit = Globals.DepositInit.SPECIMEN_SCORING;
+        opModeType = OpModeType.AUTO;
+        depositInit = DepositInit.SPECIMEN_SCORING;
 
         // DO NOT REMOVE! Resetting FTCLib Command Scheduler
         super.reset();

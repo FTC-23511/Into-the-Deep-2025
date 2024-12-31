@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration;
 import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This is the BezierCurve class. This class handles the creation of Bezier curves, which are used
