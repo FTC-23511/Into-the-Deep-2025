@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers.PinpointLocalizer;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers.OTOSLocalizer;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 
@@ -66,7 +66,7 @@ public class PoseUpdater {
      * @param hardwareMap the HardwareMap
      */
     public PoseUpdater(HardwareMap hardwareMap) {
-        this(hardwareMap, new PinpointLocalizer(hardwareMap));
+        this(hardwareMap, new OTOSLocalizer(hardwareMap));
     }
 
     /**
@@ -347,7 +347,7 @@ public class PoseUpdater {
     /**
      *
      */
-    public void resetIMU() throws InterruptedException {
+    public void resetIMU() {
         localizer.resetIMU();
     }
 }

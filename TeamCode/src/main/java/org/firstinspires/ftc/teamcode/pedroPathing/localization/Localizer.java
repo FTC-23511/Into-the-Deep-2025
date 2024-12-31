@@ -92,7 +92,7 @@ public abstract class Localizer {
     /**
      * This resets the IMU of the localizer, if applicable.
      */
-    public abstract void resetIMU() throws InterruptedException;
+    public abstract void resetIMU();
 
     /**
      * This is overridden to return the IMU, if there is one.

@@ -7,8 +7,6 @@
 
             <Servo name="rightIntakePivot" port="1"/>
             <Servo name="leftIntakePivot" port="3"/>
-            <Servo name="depositWrist" port="4"/>
-            <Servo name="leftHang" port="5"/>
 
             <goBILDA5202SeriesMotor name="extension" port="0"/>-->
             <goBILDA5202SeriesMotor name="intakeMotor" port="1"/>-->
@@ -16,6 +14,7 @@
             <goBILDA5202SeriesMotor name="liftTop" port="3"/>-->
 
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+            <SparkFunOTOS2 name="sensor_otos" port="0" bus="1"/>
             <RevColorSensorV3 name="colorSensor" port="0" bus="2"/>
 
         </LynxModule>
@@ -30,10 +29,8 @@
             <goBILDA5202SeriesMotor name="FL" port="3"/>
 
             <Servo name="rightDepositPivot" port="1"/>
-            <Servo name="gearboxSwitcher" port="2"/>
             <Servo name="leftDepositPivot" port="3"/>
             <Servo name="depositClaw" port="4"/>
-            <Servo name="rightHang" port="5"/>
 
         </LynxModule>
     </LynxUsbDevice>
