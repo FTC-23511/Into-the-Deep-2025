@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.commandbase;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.seattlesolvers.ftclib.command.SubsystemBase;
+import com.seattlesolvers.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;

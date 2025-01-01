@@ -1,28 +1,19 @@
 package org.firstinspires.ftc.teamcode.opmode.Auto;
 
-import static org.firstinspires.ftc.teamcode.commandbase.Deposit.depositPivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.AUTO_ASCENT_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.DepositInit;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_SPECIMEN_ATTACH_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_SPECIMEN_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.SLIDES_PIVOT_READY_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+import static org.firstinspires.ftc.teamcode.commandbase.Deposit.*;
+import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.ParallelRaceGroup;
-import com.arcrobotics.ftclib.command.RunCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.seattlesolvers.ftclib.command.CommandOpMode;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.InstantCommand;
+import com.seattlesolvers.ftclib.command.ParallelCommandGroup;
+import com.seattlesolvers.ftclib.command.ParallelRaceGroup;
+import com.seattlesolvers.ftclib.command.RunCommand;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.command.WaitCommand;
+import com.seattlesolvers.ftclib.command.WaitUntilCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

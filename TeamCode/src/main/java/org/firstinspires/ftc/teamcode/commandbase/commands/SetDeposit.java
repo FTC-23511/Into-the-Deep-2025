@@ -1,17 +1,13 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.DEPOSIT_PIVOT_MOVEMENT_TIME;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.ENDGAME_ASCENT_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_COMMAND_RUN_TIME_MS;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.SLIDES_PIVOT_READY_EXTENSION;
 
-import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.command.CommandBase;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 

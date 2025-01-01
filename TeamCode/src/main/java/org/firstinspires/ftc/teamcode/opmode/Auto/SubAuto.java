@@ -10,16 +10,16 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.ParallelRaceGroup;
-import com.arcrobotics.ftclib.command.RunCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.seattlesolvers.ftclib.command.CommandOpMode;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.ConditionalCommand;
+import com.seattlesolvers.ftclib.command.InstantCommand;
+import com.seattlesolvers.ftclib.command.ParallelCommandGroup;
+import com.seattlesolvers.ftclib.command.ParallelRaceGroup;
+import com.seattlesolvers.ftclib.command.RunCommand;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.command.WaitCommand;
+import com.seattlesolvers.ftclib.command.WaitUntilCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

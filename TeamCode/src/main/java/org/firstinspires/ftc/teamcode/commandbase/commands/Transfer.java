@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
+import com.seattlesolvers.ftclib.command.InstantCommand;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.hardware.Robot;

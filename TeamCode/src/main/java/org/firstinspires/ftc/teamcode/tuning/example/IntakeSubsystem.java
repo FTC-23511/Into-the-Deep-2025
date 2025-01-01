@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.tuning.example;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.seattlesolvers.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;

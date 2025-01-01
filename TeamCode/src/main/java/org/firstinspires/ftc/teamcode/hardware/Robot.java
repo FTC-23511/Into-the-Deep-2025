@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.seattlesolvers.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevColorSensorV3;

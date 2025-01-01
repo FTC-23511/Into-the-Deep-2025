@@ -6,9 +6,9 @@ import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorDetec
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorTarget.*;
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakeMotorState.*;
 
-import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.SubsystemBase;
+import com.seattlesolvers.ftclib.controller.PIDFController;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;

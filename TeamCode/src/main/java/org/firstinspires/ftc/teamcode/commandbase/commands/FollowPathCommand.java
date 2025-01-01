@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.seattlesolvers.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;

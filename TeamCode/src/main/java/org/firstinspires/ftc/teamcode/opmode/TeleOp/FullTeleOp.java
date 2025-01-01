@@ -4,12 +4,12 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 import static org.firstinspires.ftc.teamcode.commandbase.Deposit.*;
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.seattlesolvers.ftclib.command.CommandOpMode;
+import com.seattlesolvers.ftclib.command.InstantCommand;
+import com.seattlesolvers.ftclib.command.ParallelCommandGroup;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.gamepad.GamepadEx;
+import com.seattlesolvers.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,8 +18,6 @@ import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.commandbase.Deposit;
-import org.firstinspires.ftc.teamcode.commandbase.Intake;
 
 @TeleOp
 public class FullTeleOp extends CommandOpMode {

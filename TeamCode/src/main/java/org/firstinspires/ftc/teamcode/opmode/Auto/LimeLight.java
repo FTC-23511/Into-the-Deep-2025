@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.Auto;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.seattlesolvers.ftclib.command.CommandOpMode;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;

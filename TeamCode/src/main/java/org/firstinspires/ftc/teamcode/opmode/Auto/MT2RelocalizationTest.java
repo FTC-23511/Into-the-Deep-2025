@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.opmode.Auto;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.seattlesolvers.ftclib.command.CommandOpMode;
+import com.seattlesolvers.ftclib.command.InstantCommand;
+import com.seattlesolvers.ftclib.gamepad.GamepadEx;
+import com.seattlesolvers.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

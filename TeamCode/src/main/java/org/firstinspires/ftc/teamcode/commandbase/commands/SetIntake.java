@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commandbase.commands;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.seattlesolvers.ftclib.command.CommandBase;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;

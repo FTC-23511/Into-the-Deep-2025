@@ -4,7 +4,7 @@ import static android.os.SystemClock.sleep;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;

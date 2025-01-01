@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.seattlesolvers.ftclib.command.CommandBase;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

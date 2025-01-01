@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
-import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.seattlesolvers.ftclib.command.Command;
+import com.seattlesolvers.ftclib.command.CommandBase;
+import com.seattlesolvers.ftclib.command.CommandScheduler;
 
 public class UninterruptibleCommand extends CommandBase {
     private final Command command;

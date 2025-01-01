@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.commandbase.commands;
 
 import static org.firstinspires.ftc.teamcode.hardware.Globals.SLIDES_PIVOT_READY_EXTENSION;
 
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.seattlesolvers.ftclib.command.ParallelCommandGroup;
+import com.seattlesolvers.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
