@@ -29,6 +29,8 @@ import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import com.pedropathing.util.DashboardPoseTracker;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathChainCommand;
+
 import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 
 @Config
@@ -189,7 +191,7 @@ public class Burrito extends CommandOpMode {
                         // Specimen 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false),
-                                new FollowPathCommand(robot.follower, paths.get(0))
+                                new FollowPathChainCommand(robot.follower, paths.get(0))
                         ),
                         attachSpecimen,
                         new WaitCommand(250),
@@ -202,7 +204,7 @@ public class Burrito extends CommandOpMode {
                                         new WaitCommand(400),
                                         new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true)
                                 ),
-                                new FollowPathCommand(robot.follower, paths.get(1)),
+                                new FollowPathChainCommand(robot.follower, paths.get(1)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(1100),
                                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 0, true)
@@ -215,12 +217,12 @@ public class Burrito extends CommandOpMode {
                         new RealTransfer(robot),
                         new WaitCommand(250),
                         new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
-                        new FollowPathCommand(robot.follower, paths.get(2)),
+                        new FollowPathChainCommand(robot.follower, paths.get(2)),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
 
                         // Sample 2
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(3)),
+                                new FollowPathChainCommand(robot.follower, paths.get(3)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(300),
                                         new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true)
@@ -235,12 +237,12 @@ public class Burrito extends CommandOpMode {
                         new RealTransfer(robot),
                         new WaitCommand(250),
                         new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
-                        new FollowPathCommand(robot.follower, paths.get(4)),
+                        new FollowPathChainCommand(robot.follower, paths.get(4)),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
 
                         // Sample 3
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(5)),
+                                new FollowPathChainCommand(robot.follower, paths.get(5)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(300),
                                         new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true)
@@ -255,12 +257,12 @@ public class Burrito extends CommandOpMode {
                         new RealTransfer(robot),
                         new WaitCommand(250),
                         new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
-                        new FollowPathCommand(robot.follower, paths.get(6)),
+                        new FollowPathChainCommand(robot.follower, paths.get(6)),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
 
                         // Park
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)),
+                                new FollowPathChainCommand(robot.follower, paths.get(7)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(300),
                                         new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true),

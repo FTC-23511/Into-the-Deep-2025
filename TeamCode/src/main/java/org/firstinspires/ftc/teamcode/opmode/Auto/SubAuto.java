@@ -22,7 +22,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.UndoTransfer;
@@ -33,6 +32,7 @@ import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.DashboardPoseTracker;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathChainCommand;
 
 import java.util.ArrayList;
 
@@ -125,10 +125,10 @@ public class SubAuto extends CommandOpMode {
                                                 new SetIntake(robot, Intake.IntakePivotState.INTAKE, FORWARD, MAX_EXTENDO_EXTENSION, false),
                                                 new WaitCommand(1000)
                                         ),
-                                        new FollowPathCommand(robot.follower, paths.get(0)),
-                                        new FollowPathCommand(robot.follower, robot.jiggle(2.0)),
+                                        new FollowPathChainCommand(robot.follower, paths.get(0)),
+                                        new FollowPathChainCommand(robot.follower, robot.jiggle(2.0)),
                                         new WaitCommand(500),
-                                        new FollowPathCommand(robot.follower, robot.jiggle(-2.0))
+                                        new FollowPathChainCommand(robot.follower, robot.jiggle(-2.0))
                                 ),
                                 new WaitCommand(4000),
                                 new WaitUntilCommand(robot.intake::hasSample)
@@ -145,10 +145,10 @@ public class SubAuto extends CommandOpMode {
                                 new SequentialCommandGroup(
                                         new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, FORWARD, 50, true),
 
-                                        new FollowPathCommand(robot.follower, paths.get(0)),
+                                        new FollowPathChainCommand(robot.follower, paths.get(0)),
                                         new WaitCommand(500),
                                         new ParallelCommandGroup(
-                                        new FollowPathCommand(robot.follower, robot.jiggle(2.5)),
+                                        new FollowPathChainCommand(robot.follower, robot.jiggle(2.5)),
 
                                                 new ParallelRaceGroup(
                                                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, FORWARD, MAX_EXTENDO_EXTENSION, false),
@@ -157,7 +157,7 @@ public class SubAuto extends CommandOpMode {
                                                 )
                                         ),
 
-                                        new FollowPathCommand(robot.follower, robot.jiggle(-5)),
+                                        new FollowPathChainCommand(robot.follower, robot.jiggle(-5)),
 
                                         new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, FORWARD, 50, true),
 
@@ -167,7 +167,7 @@ public class SubAuto extends CommandOpMode {
                                                 new WaitUntilCommand(robot.intake::hasSample)
                                         ),
 
-                                        new FollowPathCommand(robot.follower, robot.jiggle(5))
+                                        new FollowPathChainCommand(robot.follower, robot.jiggle(5))
                                     )
                         ),
 

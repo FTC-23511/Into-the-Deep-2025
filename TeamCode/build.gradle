@@ -59,7 +59,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.20'
 
     // SolversLib
-    implementation "org.solverslib:core:0.1.1"
+    implementation "org.solverslib:core:0.2.0"
+    implementation "org.solverslib:pedroPathing:0.2.0"
 
     // j5's RR OTOS
     //  implementation "com.github.jdhs-ftc:road-runner-ftc-otos:a425f97d46"

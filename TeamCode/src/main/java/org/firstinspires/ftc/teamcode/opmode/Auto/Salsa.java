@@ -19,7 +19,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.UndoTransfer;
@@ -31,6 +30,7 @@ import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.DashboardPoseTracker;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathChainCommand;
 
 import java.util.ArrayList;
 
@@ -256,7 +256,7 @@ public class Salsa extends CommandOpMode {
                         // Specimen 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false),
-                                new FollowPathCommand(robot.follower, paths.get(0))
+                                new FollowPathChainCommand(robot.follower, paths.get(0))
                         ),
                         new InstantCommand(() -> robot.follower.setMaxPower(1)),
                         attachSpecimen,
@@ -268,7 +268,7 @@ public class Salsa extends CommandOpMode {
                                         new WaitCommand(400),
                                         new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true)
                                 ),
-                                new FollowPathCommand(robot.follower, paths.get(1))
+                                new FollowPathChainCommand(robot.follower, paths.get(1))
                         ),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 0, true),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 200, true),
@@ -276,33 +276,33 @@ public class Salsa extends CommandOpMode {
                                 new WaitUntilCommand(Intake::correctSampleDetected),
                                 new WaitCommand(2000)
                         ),
-                        new FollowPathCommand(robot.follower, paths.get(2)),
+                        new FollowPathChainCommand(robot.follower, paths.get(2)),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 300, true),
                         new WaitUntilCommand(() -> !robot.intake.hasSample()),
 
                         // Sample 2
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 100, true),
-                        new FollowPathCommand(robot.follower, paths.get(3)),
+                        new FollowPathChainCommand(robot.follower, paths.get(3)),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 300, true),
                         new ParallelRaceGroup(
                                 new WaitUntilCommand(Intake::correctSampleDetected),
                                 new WaitCommand(2000)
                         ),
-                        new FollowPathCommand(robot.follower, paths.get(4)),
+                        new FollowPathChainCommand(robot.follower, paths.get(4)),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 300, true),
                         new WaitUntilCommand(() -> !robot.intake.hasSample()),
 
                         // Intake Specimen 2
                         new ParallelCommandGroup(
                             new SetIntake(robot, Intake.IntakePivotState.TRANSFER, Intake.IntakeMotorState.REVERSE, 0, false),
-                            new FollowPathCommand(robot.follower, paths.get(5)),
+                            new FollowPathChainCommand(robot.follower, paths.get(5)),
                             new SetDeposit(robot, Deposit.DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true)
                         ),
                         new InstantCommand(() -> robot.intake.setActiveIntake(Intake.IntakeMotorState.STOP)),
                         new InstantCommand(() -> robot.follower.setMaxPower(0.25)),
                         new WaitCommand(500),
                         new ParallelRaceGroup(
-                                new FollowPathCommand(robot.follower, paths.get(6)),
+                                new FollowPathChainCommand(robot.follower, paths.get(6)),
                                 new WaitCommand(400)
                         ),
                         new InstantCommand(() -> robot.deposit.setClawOpen(false)),
@@ -312,7 +312,7 @@ public class Salsa extends CommandOpMode {
                         // Score Specimen 2
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false),
-                                new FollowPathCommand(robot.follower, paths.get(7)),
+                                new FollowPathChainCommand(robot.follower, paths.get(7)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(1000),
                                         new InstantCommand(() -> robot.follower.setMaxPower(0.35))
@@ -324,7 +324,7 @@ public class Salsa extends CommandOpMode {
                         // Intake Specimen 3
                         new ParallelRaceGroup(
                             new ParallelCommandGroup(
-                                    new FollowPathCommand(robot.follower, paths.get(8)),
+                                    new FollowPathChainCommand(robot.follower, paths.get(8)),
                                     new SetDeposit(robot, Deposit.DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true),
                                     new SequentialCommandGroup(
                                             new WaitCommand(1000),
@@ -342,7 +342,7 @@ public class Salsa extends CommandOpMode {
                                 new SetDeposit(robot, Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false),
                                 new SequentialCommandGroup(
                                         new WaitCommand(200),
-                                        new FollowPathCommand(robot.follower, paths.get(9))
+                                        new FollowPathChainCommand(robot.follower, paths.get(9))
                                 ),
                                 new SequentialCommandGroup(
                                         new WaitCommand(1200),
@@ -355,7 +355,7 @@ public class Salsa extends CommandOpMode {
                         // Intake Specimen 4
                         new ParallelRaceGroup(
                                 new ParallelCommandGroup(
-                                        new FollowPathCommand(robot.follower, paths.get(10)),
+                                        new FollowPathChainCommand(robot.follower, paths.get(10)),
                                         new SetDeposit(robot, Deposit.DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true),
                                         new SequentialCommandGroup(
                                                 new WaitCommand(1000),
@@ -373,7 +373,7 @@ public class Salsa extends CommandOpMode {
                                 new SetDeposit(robot, Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false),
                                 new SequentialCommandGroup(
                                         new WaitCommand(200),
-                                        new FollowPathCommand(robot.follower, paths.get(11))
+                                        new FollowPathChainCommand(robot.follower, paths.get(11))
                                 ),
                                 new SequentialCommandGroup(
                                         new WaitCommand(1400),
@@ -386,7 +386,7 @@ public class Salsa extends CommandOpMode {
                         // Parking
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true),
-                                new FollowPathCommand(robot.follower, paths.get(12))
+                                new FollowPathChainCommand(robot.follower, paths.get(12))
                         )
                 )
         );
