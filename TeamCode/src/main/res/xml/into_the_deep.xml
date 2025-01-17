@@ -32,6 +32,8 @@
             <Servo name="leftDepositPivot" port="3"/>
             <Servo name="depositClaw" port="4"/>
 
+            <ServoHub name="Servo Hub 3" port="3"> </ServoHub>
+
         </LynxModule>
     </LynxUsbDevice>
 </Robot>
