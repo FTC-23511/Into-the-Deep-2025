@@ -94,23 +94,25 @@ public class FullTeleOp extends CommandOpMode {
 //        );
 
         driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
-                new InstantCommand(() -> robot.intake.setPivot(IntakePivotState.INTAKE_READY))
+                new UninterruptibleCommand(
+                        new SetIntake(robot, IntakePivotState.INTAKE_READY, intakeMotorState, robot.intake.target, false)
+                )
         );
 
-        // TO-DO: need to make into 1 method in Drive.java
         driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new ConditionalCommand(
-                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.OUT)),
-                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN)),
-                        () -> Drive.subPusherState.equals(Drive.SubPusherState.IN))
+                new InstantCommand(() -> robot.drive.toggleSubPusher())
         );
 
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new InstantCommand(() -> robot.intake.setPivot(IntakePivotState.TRANSFER))
+                new UninterruptibleCommand(
+                        new SetIntake(robot, IntakePivotState.TRANSFER, intakeMotorState, robot.intake.target, false)
+                )
         );
 
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new InstantCommand(() -> robot.intake.setPivot(IntakePivotState.INTAKE))
+                new UninterruptibleCommand(
+                        new SetIntake(robot, IntakePivotState.INTAKE, intakeMotorState, robot.intake.target, false)
+                )
         );
 
         driver.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(

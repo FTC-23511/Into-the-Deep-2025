@@ -32,6 +32,7 @@ public class Intake extends SubsystemBase {
     public boolean extendoReached;
     // Between retracted and extended
     public boolean extendoRetracted;
+    public boolean pivotReached = false;
     // Between transfer and intake position
     // Whether the claw is open or not in the current state of the claw
     public enum IntakePivotState {

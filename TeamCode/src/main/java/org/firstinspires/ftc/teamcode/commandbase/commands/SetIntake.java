@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
@@ -54,7 +53,9 @@ public class SetIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if ((timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME) && motorState.equals(Intake.IntakeMotorState.REVERSE) && waitForPivot) {
+        robot.intake.pivotReached = timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME;
+
+        if (robot.intake.pivotReached && motorState.equals(Intake.IntakeMotorState.REVERSE) && waitForPivot) {
             robot.intake.setActiveIntake(motorState);
             waitForPivot = false;
         }
@@ -66,19 +67,15 @@ public class SetIntake extends CommandBase {
         if (waitForSample) {
             switch (motorState) {
                 case FORWARD:
-                    return (robot.intake.extendoReached &&
-                            (timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME))
+                    return (robot.intake.extendoReached && robot.intake.pivotReached)
                             || (Intake.correctSampleDetected() && robot.intake.hasSample());
                 case REVERSE:
-                    return (robot.intake.extendoReached &&
-                            (timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME))
+                    return (robot.intake.extendoReached && robot.intake.pivotReached)
                             || (Intake.sampleColor.equals(Intake.SampleColorDetected.NONE) && !robot.intake.hasSample());
             }
         }
 
-        return (robot.intake.extendoReached &&
-                (timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME)
-        );
+        return (robot.intake.extendoReached && robot.intake.pivotReached);
     }
 }
 

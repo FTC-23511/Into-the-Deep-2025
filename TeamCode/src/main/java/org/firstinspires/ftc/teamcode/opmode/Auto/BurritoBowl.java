@@ -13,6 +13,7 @@ import com.pedropathing.pathgen.Point;
 import com.acmerobotics.dashboard.config.Config;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
+import com.seattlesolvers.solverslib.command.ConditionalCommand;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.ParallelRaceGroup;
@@ -197,7 +198,12 @@ public class BurritoBowl extends CommandOpMode {
                         // Sample 2
                         new SequentialCommandGroup(
                                 new WaitCommand(250),
-                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000)
+                                new ConditionalCommand(
+                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
+                                        () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
+                                )
+
                         ),
                         new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 120, true),
@@ -227,7 +233,11 @@ public class BurritoBowl extends CommandOpMode {
                         new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
                         new ParallelCommandGroup(
                                 new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 320, true),
-                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true)
+                                new ConditionalCommand(
+                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
+                                        () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
+                                )
                         ),
                         new ParallelRaceGroup(
                                 new WaitUntilCommand(robot.intake::hasSample),
@@ -251,7 +261,11 @@ public class BurritoBowl extends CommandOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
                                 new SequentialCommandGroup(
                                         new WaitCommand(300),
-                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true)
+                                        new ConditionalCommand(
+                                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+                                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
+                                                () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
+                                        )
                                 )
                         ),
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 0, true),

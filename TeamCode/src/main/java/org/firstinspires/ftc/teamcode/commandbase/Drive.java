@@ -83,4 +83,16 @@ public class Drive extends SubsystemBase {
 
         Drive.subPusherState = subPusherState;
     }
+
+    public void toggleSubPusher() {
+        switch (subPusherState) {
+            case IN:
+                robot.subPusher.setPosition(SUB_PUSHER_OUT);
+                break;
+            case AUTO_PUSH:
+            case OUT:
+                robot.subPusher.setPosition(SUB_PUSHER_IN);
+                break;
+        }
+    }
 }
