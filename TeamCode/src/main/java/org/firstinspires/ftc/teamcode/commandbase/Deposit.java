@@ -69,6 +69,7 @@ public class Deposit extends SubsystemBase {
 
         double power = slidePIDF.calculate(getLiftScaledPosition(), target);
         slidesReached = slidePIDF.atSetPoint()
+                        || (target == 0 && getLiftScaledPosition() < 15)
                         || (getLiftScaledPosition() >= target && target == HIGH_BUCKET_HEIGHT)
                         || (target == SLIDES_PIVOT_READY_EXTENSION + 50 && getLiftScaledPosition() > SLIDES_PIVOT_READY_EXTENSION && getLiftScaledPosition() < SLIDES_PIVOT_READY_EXTENSION + 65);
         slidesRetracted = (target <= 0) && slidesReached;

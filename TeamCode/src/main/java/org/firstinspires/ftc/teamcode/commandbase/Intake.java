@@ -77,7 +77,7 @@ public class Intake extends SubsystemBase {
 
     public void autoUpdateExtendo() {
         double extendoPower = extendoPIDF.calculate(getExtendoScaledPosition(), this.target);
-        extendoReached = (extendoPIDF.atSetPoint() && target > 0) || (getExtendoScaledPosition() <= 8 && target == 0);
+        extendoReached = (extendoPIDF.atSetPoint() && target > 0) || (getExtendoScaledPosition() <= 3 && target == 0);
         extendoRetracted = (target <= 0) && extendoReached;
 
         // Just make sure it gets to fully retracted if target is 0

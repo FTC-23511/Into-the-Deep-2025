@@ -151,11 +151,52 @@ public class BurritoBowl extends CommandOpMode {
                                 new BezierCurve(
                                         new Point(14.500, 130.000, Point.CARTESIAN),
                                         new Point(62.000, 118.000, Point.CARTESIAN),
-                                        new Point(62.000, 98.000, Point.CARTESIAN)
+                                        new Point(62.000, 95.000, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(-90)).build());
     }
+
+    private SequentialCommandGroup intakeSampleCycleHalf(int pathNum, int extendoTarget) {
+        return new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true),
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 120, true),
+                        new SequentialCommandGroup(
+                                new WaitCommand(250),
+                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000)
+                        )
+                ),
+                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, extendoTarget, true),
+
+                new ParallelRaceGroup(
+                        new WaitUntilCommand(robot.intake::hasSample)
+//                        ,
+//                        new SequentialCommandGroup(
+//                                new FollowPathCommand(robot.follower, robot.jiggle(5)),
+//                                new FollowPathCommand(robot.follower, robot.jiggle(5))
+//                        )
+                ).withTimeout(1000),
+
+                // Allow sample to enter intake fully
+                new WaitCommand(100),
+                new InstantCommand(() -> robot.intake.setActiveIntake(IntakeMotorState.HOLD)),
+                // Allow tubing to hold onto sample
+                new WaitCommand(100),
+                new RealTransfer(robot)
+        );
+    }
+
+    private SequentialCommandGroup scoreSampleCycleHalf(int pathNum) {
+        return new SequentialCommandGroup(
+                new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000),
+                new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true),
+                new WaitCommand(50),
+                new InstantCommand(() -> robot.deposit.setClawOpen(true)),
+                new WaitCommand(200)
+        );
+    }
+
     @Override
     public void initialize() {
         opModeType = OpModeType.AUTO;
@@ -174,8 +215,8 @@ public class BurritoBowl extends CommandOpMode {
 
         robot.initHasMovement();
 
-        robot.follower.setMaxPower(0.52);
-        FollowerConstants.zeroPowerAccelerationMultiplier = 1.5;
+        robot.follower.setMaxPower(0.85);
+        FollowerConstants.zeroPowerAccelerationMultiplier = 2;
 
         generatePath();
 
@@ -184,7 +225,6 @@ public class BurritoBowl extends CommandOpMode {
                 new RunCommand(() -> robot.follower.update()),
 
                 new SequentialCommandGroup(
-
                         // Sample 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
@@ -194,100 +234,24 @@ public class BurritoBowl extends CommandOpMode {
                                 )
                         ),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
+                        new WaitCommand(250),
 
                         // Sample 2
-                        new SequentialCommandGroup(
-                                new WaitCommand(250),
-                                new ConditionalCommand(
-                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
-                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
-                                        () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
-                                )
-
-                        ),
-                        new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 120, true),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 320, true),
-
-                        new ParallelRaceGroup(
-                                new ParallelCommandGroup(
-                                        new WaitUntilCommand(robot.intake::hasSample),
-                                        new FollowPathCommand(robot.follower, robot.jiggle(5))
-                                ),
-                                new WaitCommand(1000)
-                        ),
-                        new WaitCommand(300),
-                        new InstantCommand(() -> robot.intake.setActiveIntake(IntakeMotorState.HOLD)),
-                        new WaitCommand(300),
-                        new RealTransfer(robot),
-                        new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
-                        new ParallelCommandGroup(
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.HOLD, 100, true),
-                                new FollowPathCommand(robot.follower, paths.get(2)).setHoldEnd(true)
-                        ),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
-                        new WaitCommand(250),
+                        intakeSampleCycleHalf(1, 320),
+                        scoreSampleCycleHalf(2),
 
                         // Sample 3
-                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
-                        new ParallelCommandGroup(
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 320, true),
-                                new ConditionalCommand(
-                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
-                                        new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
-                                        () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
-                                )
-                        ),
-                        new ParallelRaceGroup(
-                                new WaitUntilCommand(robot.intake::hasSample),
-                                new WaitCommand(1000)
-                        ),
-                        new WaitCommand(200),
-                        new InstantCommand(() -> robot.intake.setActiveIntake(IntakeMotorState.HOLD)),
-                        new WaitCommand(400),
-                        new RealTransfer(robot),
-                        new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
-                        new ParallelCommandGroup(
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.HOLD, 100, true),
-                                new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true)
-                        ),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
-                        new WaitCommand(250),
+                        intakeSampleCycleHalf(3, 320),
+                        scoreSampleCycleHalf(4),
 
                         // Sample 4
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
-                                new SequentialCommandGroup(
-                                        new WaitCommand(300),
-                                        new ConditionalCommand(
-                                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
-                                                new SetDeposit(robot, Deposit.DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, true).withTimeout(1000),
-                                                () -> robot.intake.pivotReached && !(Intake.intakePivotState.equals(IntakePivotState.TRANSFER) || Intake.intakePivotState.equals(IntakePivotState.TRANSFER_READY))
-                                        )
-                                )
-                        ),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 0, true),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, 350 , true),
-                        new ParallelRaceGroup(
-                                new WaitUntilCommand(robot.intake::hasSample),
-                                new WaitCommand(1000)
-                        ),
-                        new WaitCommand(200),
-                        new InstantCommand(() -> robot.intake.setActiveIntake(IntakeMotorState.HOLD)),
-                        new WaitCommand(200),
-                        new RealTransfer(robot),
-                        new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
-                        new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
-                        new WaitCommand(250),
-
-                        new InstantCommand(() -> robot.follower.setMaxPower(0.25)),
-                        new InstantCommand(() -> FollowerConstants.zeroPowerAccelerationMultiplier = 1.25),
+                        intakeSampleCycleHalf(5, 350),
+                        scoreSampleCycleHalf(6),
 
                         // Park
+                        new InstantCommand(() -> robot.follower.setMaxPower(0.6)),
+                        new InstantCommand(() -> FollowerConstants.zeroPowerAccelerationMultiplier = 1.5),
+
                         new ParallelCommandGroup(
                                 new FollowPathCommand(robot.follower, paths.get(7)),
                                 new SequentialCommandGroup(

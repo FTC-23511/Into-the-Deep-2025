@@ -31,8 +31,8 @@ public class Globals {
     public static AllianceColor allianceColor;
     public static PoseLocationName poseLocationName;
 
-    public static Pose subSample1;
-    public static Pose subSample2;
+    public static Pose subSample1 = new Pose(62.000, 94.750, Math.toRadians(90));
+    public static Pose subSample2 = new Pose(62.000, 94.750, Math.toRadians(90));
 
 
     // Robot Width and Length (in inches)
@@ -62,9 +62,9 @@ public class Globals {
     public static double MAX_EXTENDO_EXTENSION = 500;
 
     // Deposit Pivot
-    public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.947;
-    public static double DEPOSIT_PIVOT_READY_TRANSFER_POS = 0.87;
-    public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.98;
+    public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.94;
+    public static double DEPOSIT_PIVOT_READY_TRANSFER_POS = 0.89;
+    public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.985;
     public static double DEPOSIT_PIVOT_AUTO_BAR_POS = 0.35;
     public static double DEPOSIT_PIVOT_SCORING_POS = 0.3;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.03;
@@ -78,7 +78,7 @@ public class Globals {
     public static double INTAKE_PIVOT_MOVEMENT_TIME = 497 + 200; // 200 milliseconds of buffer
 
     // Deposit Claw
-    public static double DEPOSIT_CLAW_OPEN_POS = 0.45;
+    public static double DEPOSIT_CLAW_OPEN_POS = 0.43;
     public static double DEPOSIT_CLAW_CLOSE_POS = 0.14;
 
     // Deposit Wrist
@@ -87,9 +87,9 @@ public class Globals {
     public static double WRIST_FRONT_SPECIMEN_SCORING = 0.60;
     public static double WRIST_BACK_SPECIMEN_SCORING = 0.43;
     public static double WRIST_FRONT_SPECIMEN_INTAKE = 0.34;
-    public static double WRIST_BACK_SPECIMEN_INTAKE = 0.5;
+    public static double WRIST_BACK_SPECIMEN_INTAKE = 0.485;
     public static double WRIST_TRANSFER = 0.38;
-    public static double WRIST_MIDDLE_HOLD = 0.35;
+    public static double WRIST_MIDDLE_HOLD = 0.33;
     public static double WRIST_READY_TRANSFER = 0.22;
 
     // Deposit Slides
@@ -97,7 +97,7 @@ public class Globals {
     public static double SLIDES_PIVOT_READY_EXTENSION = 450;
     public static double LOW_BUCKET_HEIGHT = 450;
     public static double HIGH_BUCKET_HEIGHT = 1900;
-    public static double FRONT_HIGH_SPECIMEN_HEIGHT = 1050;
+    public static double FRONT_HIGH_SPECIMEN_HEIGHT = 1065;
     public static double BACK_HIGH_SPECIMEN_HEIGHT = 850;
     public static double BACK_HIGH_SPECIMEN_ATTACH_HEIGHT = 1400;
     public static double AUTO_ASCENT_HEIGHT = 800;

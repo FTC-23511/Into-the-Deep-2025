@@ -34,7 +34,7 @@ public class ServoOnlyTransfer extends CommandBase {
 
     @Override
     public void execute() {
-        if (index == 1 && timer.milliseconds() > 200) {
+        if (index == 1 && timer.milliseconds() > 300) {
             robot.deposit.setPivot(Deposit.DepositPivotState.TRANSFER);
 
             timer.reset();
@@ -43,7 +43,7 @@ public class ServoOnlyTransfer extends CommandBase {
             robot.deposit.setClawOpen(false);
 
             timer.reset();
-            index = 2;
+            index = 3;
         } else if (index == 3 && timer.milliseconds() > 200) {
             finished = true;
         }

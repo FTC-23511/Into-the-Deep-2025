@@ -12,6 +12,7 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
+import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -181,8 +182,12 @@ public class FullTeleOp extends CommandOpMode {
 
         operator.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
                 new UninterruptibleCommand(
+
                         new SetDeposit(robot, DepositPivotState.TRANSFER, 0, true).withTimeout(1500)
                 ).interruptOn(() -> robot.deposit.rescheduleCommand = true)
+
+                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1500)
+                )
         );
 
         operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
@@ -192,9 +197,25 @@ public class FullTeleOp extends CommandOpMode {
                 new InstantCommand(() -> robot.deposit.setClawOpen(true)));
 
         operator.getGamepadButton(GamepadKeys.Button.START).whenPressed(
-                new ParallelCommandGroup(
-                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
-                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, ENDGAME_ASCENT_HEIGHT, false).withTimeout(1500)
+                new SequentialCommandGroup(
+                        new ParallelCommandGroup(
+                                new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
+                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, ENDGAME_ASCENT_HEIGHT, false).withTimeout(1500),
+                                new WaitCommand(3000)
+                        )
+//                        ,
+//                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.STOP)),
+//                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, HIGH_BUCKET_HEIGHT, false),
+//                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
+//                        new WaitCommand(500),
+//                        new ParallelCommandGroup(
+//                                new SequentialCommandGroup(
+//                                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.EXTEND)),
+//                                        new WaitCommand(3000),
+//                                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.STOP))
+//                                ),
+//                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, false)
+//                        )
                 )
         );
 
@@ -244,8 +265,8 @@ public class FullTeleOp extends CommandOpMode {
 
         // Manual control of extendo
         if (gamepad1.right_trigger > 0.01 &&
-                !depositPivotState.equals(DepositPivotState.TRANSFER) &&
-                robot.intake.getExtendoScaledPosition() <= (MAX_EXTENDO_EXTENSION - 5)) {
+            !depositPivotState.equals(DepositPivotState.TRANSFER) &&
+            robot.intake.getExtendoScaledPosition() <= (MAX_EXTENDO_EXTENSION - 5)) {
 
             robot.intake.target += 5;
         }
@@ -273,6 +294,9 @@ public class FullTeleOp extends CommandOpMode {
         telemetryData.addData("robotState", Robot.robotState);
         telemetryData.addData("opModeType", opModeType.name());
 
+        telemetryData.addData("gamepad1 left stick x", gamepad1.left_stick_x);
+        telemetryData.addData("gamepad1 left stick x", gamepad1.left_stick_y);
+
         telemetryData.addData("hasSample()", robot.intake.hasSample());
         telemetryData.addData("colorSensor getDistance", robot.colorSensor.getDistance(DistanceUnit.CM));
 
@@ -289,9 +313,6 @@ public class FullTeleOp extends CommandOpMode {
         telemetryData.addData("intakePivotState", intakePivotState);
         telemetryData.addData("depositPivotState", depositPivotState);
         telemetryData.addData("Sigma", "Saket");
-
-        telemetryData.addData("INTAKE_HOLD_SPEED", INTAKE_HOLD_SPEED);
-        telemetryData.addData("intakeMotorState", intakeMotorState);;
 
         telemetryData.update(); // DO NOT REMOVE! Needed for telemetry
         timer.reset();

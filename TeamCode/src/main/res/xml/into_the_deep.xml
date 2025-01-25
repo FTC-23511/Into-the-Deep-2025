@@ -32,12 +32,12 @@
             <Servo name="leftDepositPivot" port="1"/>
             <Servo name="depositClaw" port="2"/>
             <Servo name="rightDepositPivot" port="3"/>
-            <Servo name="depositWrist" port="4"/>
         </LynxModule>
 
         <ServoHub name="Servo Hub 3" port="3">
             <Servo name="gearboxSwitcher" port="0"/>
             <ContinuousRotationServo name="leftHang" port="1"/>
+            <Servo name="depositWrist" port="4"/>
             <ContinuousRotationServo name="rightHang" port="5"/>
         </ServoHub>
     </LynxUsbDevice>

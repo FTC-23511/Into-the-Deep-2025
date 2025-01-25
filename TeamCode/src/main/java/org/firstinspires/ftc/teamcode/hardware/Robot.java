@@ -206,11 +206,11 @@ public class Robot {
                 .addPath(
                         // Line 1
                         new BezierLine(
-                                new Point(follower.getPose().getX(), follower.getPose().getY(), Point.CARTESIAN),
-                                new Point(follower.getPose().getX(), follower.getPose().getY(), Point.CARTESIAN)
+                                new Point(follower.getPose()),
+                                new Point(follower.getPose())
                         )
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(follower.getPose().getHeading()), Math.toRadians(follower.getPose().getHeading() + angle)).build();
+                .setLinearHeadingInterpolation(Math.toRadians(follower.getPose().getHeading()), follower.getPose().getHeading() + Math.toRadians(angle)).build();
     }
 
     public double getYawDegrees() {
