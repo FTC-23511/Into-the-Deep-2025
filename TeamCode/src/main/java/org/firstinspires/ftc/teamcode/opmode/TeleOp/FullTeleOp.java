@@ -180,7 +180,7 @@ public class FullTeleOp extends CommandOpMode {
         operator.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
                 new UninterruptibleCommand(
                         new SetDeposit(robot, DepositPivotState.TRANSFER, 0, true).withTimeout(1500)
-                )
+                ).interruptOn(() -> robot.deposit.rescheduleCommand = true)
         );
 
         operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(

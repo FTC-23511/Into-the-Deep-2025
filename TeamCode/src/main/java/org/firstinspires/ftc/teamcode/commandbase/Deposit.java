@@ -19,6 +19,7 @@ public class Deposit extends SubsystemBase {
     public double target;
 
     public boolean slidesReached;
+    public boolean rescheduleCommand = false;
 
     // Between retracted and extended
     public boolean slidesRetracted;

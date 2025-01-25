@@ -4,10 +4,8 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
-import com.seattlesolvers.solverslib.command.ConditionalCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
 
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
@@ -105,23 +103,21 @@ public class SetDeposit extends CommandBase {
     public boolean isFinished() {
         if (timer.milliseconds() > (Math.abs(previousServoPos - currentServoPos) * DEPOSIT_PIVOT_MOVEMENT_TIME)
             && robot.intake.hasSample() && pivotState.equals(Deposit.DepositPivotState.SCORING)) { //  && target == HIGH_BUCKET_HEIGHT || target == HIGH_BUCKET_HEIGHT
-//            CommandScheduler.getInstance().schedule(
-//                    new UninterruptibleCommand(
-//                            new SequentialCommandGroup(
-//                                    new RealTransfer(robot),
-//                                    new ConditionalCommand(
-//                                            new SetDeposit(robot, pivotState, target, true).withTimeout(1000),
-//                                            new SetDeposit(robot, pivotState, target, clawOpen).withTimeout(1000),
-//                                            () -> opModeType.equals(OpModeType.AUTO)
-//                                    )
-//                            )
-//                    )
-//            );
-//
-//            return true;
+            robot.deposit.rescheduleCommand = true;
         }
 
         return robot.deposit.slidesReached && index == 3;
+    }
+
+    public void end(boolean interrupted) {
+        if (interrupted) {
+            new SequentialCommandGroup(
+                    new RealTransfer(robot),
+                    this
+            ).schedule(false);
+
+            robot.deposit.rescheduleCommand = false;
+        }
     }
 }
 

@@ -215,7 +215,7 @@ public class BurritoBowl extends CommandOpMode {
                         new WaitCommand(300),
                         new RealTransfer(robot),
                         new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000),
+                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
                         new ParallelCommandGroup(
                                 new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.HOLD, 100, true),
                                 new FollowPathCommand(robot.follower, paths.get(2)).setHoldEnd(true)
@@ -238,7 +238,7 @@ public class BurritoBowl extends CommandOpMode {
                         new WaitCommand(400),
                         new RealTransfer(robot),
                         new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
+                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
                         new ParallelCommandGroup(
                                 new SetIntake(robot, Intake.IntakePivotState.INTAKE, IntakeMotorState.HOLD, 100, true),
                                 new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true)
@@ -265,7 +265,7 @@ public class BurritoBowl extends CommandOpMode {
                         new WaitCommand(200),
                         new RealTransfer(robot),
                         new WaitCommand(250),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
+                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500).interruptOn(() -> robot.deposit.rescheduleCommand = true),
                         new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
                         new WaitCommand(250),
