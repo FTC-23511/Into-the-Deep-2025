@@ -403,6 +403,8 @@ public class LifestyleBowl extends CommandOpMode {
         telemetryData.addData("robotState", Robot.robotState);
 
         telemetryData.addData("hasSample()", robot.intake.hasSample());
+        telemetryData.addData("depositFailed", robot.deposit.depositFailed);
+        telemetryData.addData("redoDeposit()", robot.deposit.redoDeposit(depositPivotState));
         telemetryData.addData("colorSensor getDistance", robot.colorSensor.getDistance(DistanceUnit.CM));
 
         telemetryData.addData("intakePivotState", intakePivotState);
