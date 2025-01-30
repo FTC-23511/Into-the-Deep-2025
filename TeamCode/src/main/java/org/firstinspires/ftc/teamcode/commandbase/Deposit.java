@@ -22,6 +22,7 @@ public class Deposit extends SubsystemBase {
 
     // Between retracted and extended
     public boolean slidesRetracted;
+    public boolean depositFailed = false;
 
     public enum DepositPivotState {
         SCORING,
@@ -85,6 +86,16 @@ public class Deposit extends SubsystemBase {
             robot.liftTop.setPower(power);
             robot.liftBottom.setPower(power);
         }
+
+        if (redoDeposit(depositPivotState)) {
+            depositFailed = robot.intake.hasSample();
+        }
+    }
+
+    public boolean redoDeposit(DepositPivotState depositPivotState) {
+        return opModeType.equals(OpModeType.AUTO) &&
+               (getLiftScaledPosition() > SLIDES_PIVOT_READY_EXTENSION) &&
+               (depositPivotState.equals(DepositPivotState.SCORING));
     }
 
     public void setClawOpen(boolean open) {

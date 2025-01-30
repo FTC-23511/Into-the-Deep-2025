@@ -31,6 +31,7 @@ import org.firstinspires.ftc.teamcode.commandbase.Drive;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
+import org.firstinspires.ftc.teamcode.commandbase.commands.RescheduleScoring;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.UndoTransfer;
@@ -246,7 +247,14 @@ public class LifestyleBowl extends CommandOpMode {
                                 new WaitCommand(250),
                                 new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true)
                         ),
-                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+                        new RescheduleScoring(
+                                robot,
+                                new SequentialCommandGroup(
+                                        new RealTransfer(robot),
+                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+                                ),
+                                robot.deposit.depositFailed
+                        ).withTimeout(7000)
                 ),
                 new InstantCommand(() -> robot.deposit.setClawOpen(true)),
                 new WaitCommand(200)
