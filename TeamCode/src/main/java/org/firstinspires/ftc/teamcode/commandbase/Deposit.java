@@ -87,12 +87,12 @@ public class Deposit extends SubsystemBase {
             robot.liftBottom.setPower(power);
         }
 
-        if (redoDeposit(depositPivotState)) {
+        if (redoDeposit()) {
             depositFailed = robot.intake.hasSample();
         }
     }
 
-    public boolean redoDeposit(DepositPivotState depositPivotState) {
+    public boolean redoDeposit() {
         return opModeType.equals(OpModeType.AUTO) &&
                (getLiftScaledPosition() > SLIDES_PIVOT_READY_EXTENSION) &&
                (depositPivotState.equals(DepositPivotState.SCORING));
