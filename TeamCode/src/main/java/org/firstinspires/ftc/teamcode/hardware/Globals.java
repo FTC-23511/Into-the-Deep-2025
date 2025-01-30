@@ -100,6 +100,7 @@ public class Globals {
     // Deposit Slides
     public static double MAX_SLIDES_EXTENSION = 2000;
     public static double SLIDES_PIVOT_READY_EXTENSION = 450;
+    public static double SLIDES_FAIL_HEIGHT = 275;
     public static double LOW_BUCKET_HEIGHT = 450;
     public static double HIGH_BUCKET_HEIGHT = 1900;
     public static double FRONT_HIGH_SPECIMEN_HEIGHT = 1065;

@@ -109,7 +109,7 @@ public class SetDeposit extends CommandBase {
 //
 //            this.cancel();
 //        }
-        return robot.deposit.slidesReached && index == 3 || (robot.deposit.depositFailed && robot.deposit.redoDeposit());
+        return robot.deposit.slidesReached && index == 3 || (robot.deposit.depositFailed && robot.deposit.redoDeposit(pivotState, SLIDES_PIVOT_READY_EXTENSION));
     }
 
 //    @Override
