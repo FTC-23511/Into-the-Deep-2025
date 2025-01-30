@@ -249,10 +249,7 @@ public class LifestyleBowl extends CommandOpMode {
                         ),
                         new RescheduleScoring(
                                 robot,
-                                new SequentialCommandGroup(
-                                        new RealTransfer(robot),
-                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
-                                ),
+                                new SetDeposit(robot, DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000),
                                 robot.deposit.depositFailed
                         ).withTimeout(7000)
                 ),

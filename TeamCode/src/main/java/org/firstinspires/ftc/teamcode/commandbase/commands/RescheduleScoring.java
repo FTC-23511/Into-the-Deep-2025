@@ -15,6 +15,7 @@ public class RescheduleScoring extends SequentialCommandGroup {
                     new RepeatCommand(
                             new ConditionalCommand(
                                     new SequentialCommandGroup(
+                                            new RealTransfer(robot),
                                             command
                                     ),
                                     new InstantCommand(),
