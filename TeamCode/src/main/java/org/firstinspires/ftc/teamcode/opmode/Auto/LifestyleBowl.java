@@ -282,7 +282,7 @@ public class LifestyleBowl extends CommandOpMode {
                 new ParallelRaceGroup(
                         new WaitUntilCommand(() -> Intake.correctSampleDetected() && robot.intake.hasSample()),
                         new SequentialCommandGroup(
-                                new SetIntake(robot, IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 0, false),
+                                new SetIntake(robot, IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 0, false).withTimeout(1000),
 
                                 new ConditionalCommand(
                                         new HoldPointCommand(robot.follower, new Pose(-3, 0, 0), false), // Right 3 inches
@@ -291,7 +291,7 @@ public class LifestyleBowl extends CommandOpMode {
                                 ),
 
                                 new SetIntake(robot, IntakePivotState.INTAKE, IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).raceWith(new WaitUntilCommand(() -> robot.intake.hasSample() && !correctSampleDetected())).withTimeout(2000),
-                                new SetIntake(robot, IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 0, false),
+                                new SetIntake(robot, IntakePivotState.INTAKE, IntakeMotorState.FORWARD, 0, false).withTimeout(1000),
 
                                 new ConditionalCommand(
                                         new HoldPointCommand(robot.follower, new Pose(-3, 0, 0), false), // Right 3 inches
