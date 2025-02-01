@@ -1,0 +1,20 @@
+<Robot type="FirstInspires-FTC">
+    <!-- Config for servo and motor testers on any robot -->
+    <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <LynxModule name="Control Hub" port="173">
+            <goBILDA5202SeriesMotor name="centerMotor" port="0"/>
+            <goBILDA5202SeriesMotor name="leftMotor" port="1"/>
+            <goBILDA5202SeriesMotor name="rightMotor" port="2"/>
+            <Servo name="centerClaw" port="0"/>
+            <Servo name="leftClaw" port="1"/>
+            <Servo name="rightClaw" port="2"/>
+            <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+            <SparkFunOTOS2 name="sensor_otos" port="0" bus="1"/>
+        </LynxModule>
+    </LynxUsbDevice>
+    <LynxUsbDevice name="Expansion Hub Portal 1" serialNumber="DQ81DA4Y" parentModuleAddress="2">
+        <LynxModule name="Expansion Hub 2" port="2">
+
+        </LynxModule>
+    </LynxUsbDevice>
+</Robot>

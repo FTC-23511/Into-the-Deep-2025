@@ -1,0 +1,44 @@
+<Robot type="FirstInspires-FTC">
+    <!-- Config for main 2024 Robot -->
+<!--    <EthernetDevice name="limelight" serialNumber="EthernetOverUsb:eth0:172.29.0.31" port="0" ipAddress="172.29.0.1" />-->
+
+    <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <LynxModule name="Control Hub" port="173">
+
+            <Servo name="rightIntakePivot" port="3"/>
+            <Servo name="leftIntakePivot" port="5"/>
+
+            <goBILDA5202SeriesMotor name="liftTop" port="0"/>-->
+            <goBILDA5202SeriesMotor name="liftBottom" port="1"/>-->
+            <goBILDA5202SeriesMotor name="intakeMotor" port="2"/>-->
+            <goBILDA5202SeriesMotor name="extension" port="3"/>-->
+
+            <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+            <RevColorSensorV3 name="colorSensor" port="0" bus="1"/>
+            <goBILDAPinpoint name="pinpoint" port="0" bus="2"/>
+
+        </LynxModule>
+    </LynxUsbDevice>
+
+    <LynxUsbDevice name="Expansion Hub Portal 1" serialNumber="DQ81DA4Y" parentModuleAddress="2">
+        <LynxModule name="Expansion Hub 2" port="2">
+
+            <goBILDA5202SeriesMotor name="FR" port="0"/>
+            <goBILDA5202SeriesMotor name="FL" port="1"/>
+            <goBILDA5202SeriesMotor name="BL" port="2"/>
+            <goBILDA5202SeriesMotor name="BR" port="3"/>
+
+            <Servo name="subPusher" port="0"/>
+            <Servo name="leftDepositPivot" port="1"/>
+            <Servo name="depositClaw" port="2"/>
+            <Servo name="rightDepositPivot" port="3"/>
+        </LynxModule>
+
+        <ServoHub name="Servo Hub 3" port="3">
+            <Servo name="gearboxSwitcher" port="0"/>
+            <ContinuousRotationServo name="leftHang" port="1"/>
+            <Servo name="depositWrist" port="4"/>
+            <ContinuousRotationServo name="rightHang" port="5"/>
+        </ServoHub>
+    </LynxUsbDevice>
+</Robot>

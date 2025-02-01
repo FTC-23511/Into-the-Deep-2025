@@ -1,0 +1,78 @@
+//
+// build.gradle in TeamCode
+//
+// Most of the definitions for building your module reside in a common, shared
+// file 'build.common.gradle'. Being factored in this way makes it easier to
+// integrate updates to the FTC into your code. If you really need to customize
+// the build definitions, you can place those customizations in this file, but
+// please think carefully as to whether such customizations are really necessary
+// before doing so.
+
+
+// Custom definitions may go here
+
+// Include common definitions from above.
+apply from: '../build.common.gradle'
+apply from: '../build.dependencies.gradle'
+
+android {
+    namespace = 'org.firstinspires.ftc.teamcode'
+
+    packagingOptions {
+        jniLibs {
+            pickFirsts += ['**/*.so']
+        }
+        jniLibs.useLegacyPackaging true
+    }
+}
+
+repositories {
+    maven {
+        url = 'https://maven.brott.dev/'
+    }
+    maven {
+        url = 'https://jitpack.io'
+    }
+    maven {
+        url= 'https://maven.pedropathing.com/'
+    }
+    maven {
+        url "https://repo.dairy.foundation/releases"
+    }
+}
+
+dependencies {
+    implementation project(':FtcRobotController')
+    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+
+    // RoadRunner v1.0.x & FTC Dashboard
+    implementation "com.acmerobotics.roadrunner:core:1.0.0"
+    implementation "com.acmerobotics.roadrunner:actions:1.0.0"
+    implementation "com.acmerobotics.dashboard:dashboard:0.4.16"
+
+    // Pedro Pathing
+    implementation 'com.pedropathing:beta:1.0.7-beta4'
+    //noinspection GradleDependency
+    
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7'
+    //noinspection GradleDependency,DifferentStdlibGradleVersion
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.20'
+
+    // SolversLib
+    implementation "org.solverslib:core:0.2.2"
+
+    // j5's RR OTOS
+    //  implementation "com.github.jdhs-ftc:road-runner-ftc-otos:a425f97d46"
+    // implementation "page.j5155.roadrunner:ftc-otos:0.1.0+0.1.14"
+
+    // FTCLib
+    // implementation 'org.ftclib.ftclib:core:2.1.1'
+
+    // SlothLoad
+    //  implementation "dev.frozenmilk.sinister:Sloth:0.0.1"
+    //  implementation "dev.frozenmilk.sinister.sloth:Load:0.0.2"
+    //  implementation "dev.frozenmilk.sinister.sloth:DashFix:0.0.0"
+
+    // Photon
+    // implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.1-ALPHA'
+}
