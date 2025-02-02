@@ -130,6 +130,7 @@ public class FullTeleOp extends CommandOpMode {
                 new UninterruptibleCommand(
                         new SequentialCommandGroup(
                                 new InstantCommand(super::reset),
+                                new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN)),
                                 new InstantCommand(() -> robot.deposit.setSlideTarget(robot.deposit.getLiftScaledPosition()))
                         )
                 )

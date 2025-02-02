@@ -245,16 +245,14 @@ public class LifestyleBowl extends CommandOpMode {
                 new ParallelCommandGroup(
                         new SequentialCommandGroup(
                                 new WaitCommand(300),
-                                new ParallelCommandGroup(
-                                        new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true),
-                                        new ConditionalCommand(
-                                                new SetIntake(robot, IntakePivotState.HOVER, IntakeMotorState.FORWARD, nextSlideTarget, false),
-                                                new InstantCommand(),
-                                                () -> nextSlideTarget != -1
-                                        )
-                                )
+                                new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true)
                         ),
                         new SetDeposit(robot, DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+                ),
+                new ConditionalCommand(
+                        new SetIntake(robot, IntakePivotState.HOVER, IntakeMotorState.FORWARD, nextSlideTarget, false),
+                        new InstantCommand(),
+                        () -> nextSlideTarget != -1
                 ),
                 new InstantCommand(() -> robot.deposit.setClawOpen(true)),
                 new WaitCommand(200)
