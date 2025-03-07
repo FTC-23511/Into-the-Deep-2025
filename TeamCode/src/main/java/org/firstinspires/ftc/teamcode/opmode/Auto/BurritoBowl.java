@@ -28,7 +28,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.FollowPathCommand;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
