@@ -30,13 +30,15 @@ import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
+import org.firstinspires.ftc.teamcode.commandbase.Intake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
+import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Ques (5spec+1sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Queso (5spec+1sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
 
 public class Queso extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
@@ -67,85 +69,85 @@ public class Queso extends CommandOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
-                // Drive to first sample spike mark
+                // Drive to first sweep position for sample pushing
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
                                         new Point(42.000, 66.250, Point.CARTESIAN),
-                                        new Point(24.707, 37.934, Point.CARTESIAN),
-                                        new Point(52.000, 32.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(75))
-                        .build());
+                                        new Point(31.695, 52.908, Point.CARTESIAN),
+                                        new Point(30.946, 42.925, Point.CARTESIAN)
+                               )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(165))
+                .setReversed(true)
+                .build());
 
         paths.add(
-                // Drop off first sample into observation zone
+                // Sweep first sample
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 3
                                 new BezierLine(
-                                        new Point(52.000, 32.000, Point.CARTESIAN),
-                                        new Point(13.000, 24.707, Point.CARTESIAN)
+                                        new Point(30.946, 42.925, Point.CARTESIAN),
+                                        new Point(28.451, 36.936, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(75))
+                        .setLinearHeadingInterpolation(Math.toRadians(165), Math.toRadians(40))
                         .build());
 
         paths.add(
-                // Drive to second sample spike mark
+                // Drive to second sweep position for sample pushing
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 4
                                 new BezierLine(
-                                        new Point(13.000, 24.707, Point.CARTESIAN),
-                                        new Point(52.000, 22.750, Point.CARTESIAN)
+                                        new Point(28.451, 36.936, Point.CARTESIAN),
+                                        new Point(31.945, 31.445, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(75))
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(165))
                         .build());
 
         paths.add(
-                // Drop off second sample into observation zone
+                // Sweep second sample
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 5
                                 new BezierLine(
-                                        new Point(52.000, 22.750, Point.CARTESIAN),
-                                        new Point(13.000, 13.477, Point.CARTESIAN)
+                                        new Point(31.945, 31.445, Point.CARTESIAN),
+                                        new Point(27.452, 28.451, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(75))
+                        .setLinearHeadingInterpolation(Math.toRadians(165), Math.toRadians(40))
                         .build());
 
         paths.add(
-                // Drive to third sample spike mark
+                // Drive to third sweep position for sample pushing
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
-                                new BezierCurve(
-                                        new Point(13.000, 13.477, Point.CARTESIAN),
-                                        new Point(69.000, 18.000, Point.CARTESIAN),
-                                        new Point(60.000, 8.500, Point.CARTESIAN)
+                                new BezierLine(
+                                        new Point(27.452, 28.451, Point.CARTESIAN),
+                                        new Point(31.945, 24.458, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(75), Math.toRadians(90))
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(165))
                         .build());
 
         paths.add(
-                // Drop off third sample into observation zone
+                // Sweep third sample
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 7
                                 new BezierLine(
-                                        new Point(60.000, 8.500, Point.CARTESIAN),
-                                        new Point(12.000, 8.500, Point.CARTESIAN)
+                                        new Point(31.945, 24.458, Point.CARTESIAN),
+                                        new Point(25.955, 23.709, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(90))
+                        .setLinearHeadingInterpolation(Math.toRadians(165), Math.toRadians(40))
                         .build());
-        
+
         paths.add(
                 // Move to first specimen intake minus a few inches to give human player time to align specimen
                 robot.follower.pathBuilder()
@@ -156,7 +158,7 @@ public class Queso extends CommandOpMode {
                                         new Point(14.000, 32.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0)).build());
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(0)).build());
 
         paths.add(
                 // Second specimen intake (also move after minus few inches from specimen intake)
@@ -346,12 +348,22 @@ public class Queso extends CommandOpMode {
 
                         // Sample 1
                         new ParallelCommandGroup(
-                                new SequentialCommandGroup(
-                                        new WaitCommand(200),
-                                        new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true)
-                                ),
+                                new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).beforeStarting(new WaitCommand(200)),
+                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 500, false).beforeStarting(new WaitCommand(750)),
+
                                 new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true)
                         ),
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.STOP, robot.intake.target, false),
+
+                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true),
+
+                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true)
+
+                        /*
                         samplePush(2),
 
                         // Sample 2
@@ -397,6 +409,7 @@ public class Queso extends CommandOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(16)),
                                 new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, false)
                         )
+                        */
                 )
         );
 
