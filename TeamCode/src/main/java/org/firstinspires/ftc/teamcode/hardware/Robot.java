@@ -177,7 +177,7 @@ public class Robot {
         follower = new Follower(hardwareMap);
 
 
-        FollowerConstants.useBrakeModeInTeleOp = true;
+        FollowerConstants.useBrakeModeInTeleOp = false;
 
         poseUpdater = new PoseUpdater(hardwareMap);
 

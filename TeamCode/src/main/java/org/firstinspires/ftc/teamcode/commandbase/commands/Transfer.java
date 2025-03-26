@@ -7,6 +7,7 @@ import com.seattlesolvers.solverslib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
+@Deprecated
 public class Transfer extends SequentialCommandGroup {
     public Transfer(Robot robot) {
         addCommands(

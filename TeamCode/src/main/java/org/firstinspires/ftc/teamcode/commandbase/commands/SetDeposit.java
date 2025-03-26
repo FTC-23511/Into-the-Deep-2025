@@ -35,7 +35,6 @@ public class SetDeposit extends CommandBase {
 
     @Override
     public void initialize() {
-
         if (Deposit.depositPivotState.equals(this.pivotState) && robot.deposit.target == this.target) {
             index = 3;
         } else {
@@ -44,34 +43,21 @@ public class SetDeposit extends CommandBase {
 
             // Move slides to above pivot ready extension if target is below the pivot ready extension so that arm can move later
             // If it is more than that just yolo it because slides are faster than the pivot so arm is ready to move instantly
-            if (target >= SLIDES_PIVOT_READY_EXTENSION) {
-                robot.deposit.setSlideTarget(target);
+            robot.deposit.setSlideTarget(target);
 
-                // Index for moving the arm
-                if (pivotState.equals(Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING) || pivotState.equals(Deposit.DepositPivotState.BACK_SPECIMEN_SCORING)) {
-                    index = 0.5;
-                } else {
-                    index = 1;
-                }
+            // Index for moving the arm
+            if (pivotState.equals(Deposit.DepositPivotState.FRONT_SPECIMEN_SCORING) || pivotState.equals(Deposit.DepositPivotState.BACK_SPECIMEN_SCORING)) {
+                index = 0.5;
             } else {
-                robot.deposit.setSlideTarget(SLIDES_PIVOT_READY_EXTENSION + 50);
-
-                // Index for wait for slide move up before move arm
-                index = 0;
+                index = 1;
             }
 
             timer.reset();
         }
-
     }
 
     @Override
     public void execute() {
-        // Wait until slide is above height that pivot won't hit axle
-        if (robot.liftEncoder.getPosition() >= SLIDES_PIVOT_READY_EXTENSION && index == 0) {
-            index = 1;
-        }
-
         // Wait for slides to go a bit up if going to specimen scoring so that clip doesn't hit wall
         if (index == 0.5 && timer.milliseconds() >= 200) {
             index = 1;

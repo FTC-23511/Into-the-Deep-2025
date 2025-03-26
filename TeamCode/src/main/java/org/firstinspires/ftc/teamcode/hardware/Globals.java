@@ -58,7 +58,7 @@ public class Globals {
     public static int BLUE_EDGE_CASE_THRESHOLD = 675;
 
     // Intake Pivot
-    public static double INTAKE_PIVOT_TRANSFER_POS = 0.05;
+    public static double INTAKE_PIVOT_TRANSFER_POS = 0.22;
     public static double INTAKE_PIVOT_READY_TRANSFER_POS = 0.25;
     public static double INTAKE_PIVOT_INTAKE_POS = 0.735;
     public static double INTAKE_PIVOT_READY_INTAKE_POS = 0.54;
@@ -68,9 +68,9 @@ public class Globals {
     public static double MAX_EXTENDO_EXTENSION = 500;
 
     // Deposit Pivot
-    public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.94;
+    public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.81;
     public static double DEPOSIT_PIVOT_READY_TRANSFER_POS = 0.90;
-    public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.985;
+    public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.7;
     public static double DEPOSIT_PIVOT_AUTO_BAR_POS = 0.35;
     public static double DEPOSIT_PIVOT_SCORING_POS = 0.3;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.03;
@@ -94,8 +94,8 @@ public class Globals {
     public static double WRIST_BACK_SPECIMEN_SCORING = 0.43;
     public static double WRIST_FRONT_SPECIMEN_INTAKE = 0.3;
     public static double WRIST_BACK_SPECIMEN_INTAKE = 0.485;
-    public static double WRIST_TRANSFER = 0.38;
-    public static double WRIST_MIDDLE_HOLD = 0.33;
+    public static double WRIST_TRANSFER = 0.19;
+    public static double WRIST_MIDDLE_HOLD = 0.20;
     public static double WRIST_READY_TRANSFER = 0.22;
 
     // Deposit Slides
