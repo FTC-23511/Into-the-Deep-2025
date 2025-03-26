@@ -65,7 +65,7 @@ public class Globals {
     public static double INTAKE_PIVOT_HOVER_INTAKE_POS = 0.71;
 
     // Intake Extendo
-    public static double MAX_EXTENDO_EXTENSION = 500;
+    public static double MAX_EXTENDO_EXTENSION = 525; // Previously 500
 
     // Deposit Pivot
     public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.81;
