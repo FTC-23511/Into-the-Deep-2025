@@ -33,8 +33,8 @@ public class depositServosTuner extends OpMode {
         robot.depositWrist.setPosition(WRIST_SERVO_POS);
         robot.depositClaw.setPosition(CLAW_SERVO_POS);
 
-        robot.leftIntakePivot.setPosition(INTAKE_SERVO_POS);
-        robot.rightIntakePivot.setPosition(INTAKE_SERVO_POS);
+//        robot.leftIntakePivot.setPosition(INTAKE_SERVO_POS);
+//        robot.rightIntakePivot.setPosition(INTAKE_SERVO_POS);
     }
 
     @Override
@@ -43,13 +43,13 @@ public class depositServosTuner extends OpMode {
         robot.rightDepositPivot.setPosition(CENTER_SERVO_POS);
         robot.depositWrist.setPosition(WRIST_SERVO_POS);
         robot.depositClaw.setPosition(CLAW_SERVO_POS);
-        robot.leftIntakePivot.setPosition(INTAKE_SERVO_POS);
-        robot.rightIntakePivot.setPosition(INTAKE_SERVO_POS);
+//        robot.leftIntakePivot.setPosition(INTAKE_SERVO_POS);
+//        robot.rightIntakePivot.setPosition(INTAKE_SERVO_POS);
 
         CENTER_SERVO_POS = Math.max(Math.min(CENTER_SERVO_POS, 1), 0);
         WRIST_SERVO_POS = Math.max(Math.min(WRIST_SERVO_POS, 1), 0);
         CLAW_SERVO_POS = Math.max(Math.min(CLAW_SERVO_POS, 1), 0);
-        INTAKE_SERVO_POS = Math.max(Math.min(INTAKE_SERVO_POS, 1), 0);
+//        INTAKE_SERVO_POS = Math.max(Math.min(INTAKE_SERVO_POS, 1), 0);
 
         currentGamepad1.copy(gamepad1);
 
@@ -60,8 +60,8 @@ public class depositServosTuner extends OpMode {
             robot.deposit.setClawOpen(false);
         }
 
-        telemetry.addData("leftIntakePivot getPosition", robot.leftIntakePivot.getPosition());
-        telemetry.addData("rightIntakePivot getPosition",robot.rightIntakePivot.getPosition());
+//        telemetry.addData("leftIntakePivot getPosition", robot.leftIntakePivot.getPosition());
+//        telemetry.addData("rightIntakePivot getPosition",robot.rightIntakePivot.getPosition());
         telemetry.addData("leftDepositPivot getPosition", robot.leftDepositPivot.getPosition());
         telemetry.addData("rightDepositPivot getPosition",robot.rightDepositPivot.getPosition());
         telemetry.addData("depositWrist getPosition",robot.depositWrist.getPosition());

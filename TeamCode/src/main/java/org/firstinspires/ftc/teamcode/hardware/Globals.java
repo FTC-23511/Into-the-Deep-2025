@@ -72,7 +72,7 @@ public class Globals {
     public static double DEPOSIT_PIVOT_READY_TRANSFER_POS = 0.90;
     public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.7;
     public static double DEPOSIT_PIVOT_AUTO_BAR_POS = 0.35;
-    public static double DEPOSIT_PIVOT_SCORING_POS = 0.3;
+    public static double DEPOSIT_PIVOT_SCORING_POS = 0.35;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.03;
     public static double DEPOSIT_PIVOT_SPECIMEN_BACK_INTAKE_POS = 0.83;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_SCORING_POS = 0.20;
@@ -88,7 +88,7 @@ public class Globals {
     public static double DEPOSIT_CLAW_CLOSE_POS = 0.14;
 
     // Deposit Wrist
-    public static double WRIST_SCORING = 0.37;
+    public static double WRIST_SCORING = 0.45;
     public static double WRIST_AUTO_BAR = 0.3;
     public static double WRIST_FRONT_SPECIMEN_SCORING = 0.60;
     public static double WRIST_BACK_SPECIMEN_SCORING = 0.43;
@@ -102,7 +102,7 @@ public class Globals {
     public static double MAX_SLIDES_EXTENSION = 2000;
     public static double SLIDES_PIVOT_READY_EXTENSION = 450;
     public static double LOW_BUCKET_HEIGHT = 450;
-    public static double HIGH_BUCKET_HEIGHT = 1900;
+    public static double HIGH_BUCKET_HEIGHT = 2000;
     public static double FRONT_HIGH_SPECIMEN_HEIGHT = 1065;
     public static double BACK_HIGH_SPECIMEN_HEIGHT = 850;
     public static double BACK_HIGH_SPECIMEN_ATTACH_HEIGHT = 1400;
