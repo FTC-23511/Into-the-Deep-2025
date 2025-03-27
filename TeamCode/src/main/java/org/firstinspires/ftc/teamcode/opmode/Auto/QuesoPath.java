@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.teamcode.commandbase.Deposit.depositPivotSta
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.FRONT_HIGH_SPECIMEN_HEIGHT;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.SLIDES_PIVOT_READY_EXTENSION;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.autoEndPose;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
@@ -15,6 +14,7 @@ import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
+import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.DashboardPoseTracker;
@@ -26,6 +26,7 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
+import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
 import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 @Config
     @Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
 
-public class Queso extends CommandOpMode {
+public class QuesoPath extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
     private ElapsedTime timer;
 
@@ -380,77 +381,11 @@ public class Queso extends CommandOpMode {
                 new RunCommand(() -> robot.follower.update()),
 
                 new SequentialCommandGroup(
-                        // Specimen 1
-                        new ParallelCommandGroup(
-                                new SetDeposit(robot, DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false).withTimeout(1000),
-                                new FollowPathCommand(robot.follower, paths.get(0))
-                        ),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
-
-                        // Sample 1
-                        new ParallelCommandGroup(
-                                new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).beforeStarting(new WaitCommand(200)),
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 500, false).beforeStarting(new WaitCommand(750)),
-
-                                new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true)
-                        ),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.STOP, robot.intake.target, false),
-
-                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true),
-
-                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true)
-
-                        /*
-                        samplePush(2),
-
-                        // Sample 2
-                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
-                        samplePush(4),
-
-                        // Sample 3
-                        new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(6)),
-
-                        // Intake Specimen 2
-                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true),
-
-                        new WaitCommand(250),
-
-                        new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true).withTimeout(500),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(false)),
-                        new WaitCommand(200),
-
-                        // Score Specimen 2
-                        scoreSpecimenCycleHalf(9),
-
-                        // Intake Specimen 3
-                        intakeSpecimenCycleHalf(10),
-
-                        // Scoring Specimen 3
-                        scoreSpecimenCycleHalf(11),
-
-                        // Intake Specimen 4
-                        intakeSpecimenCycleHalf(12),
-
-                        // Scoring Specimen 4
-                        scoreSpecimenCycleHalf(13),
-
-                        // Intake Specimen 5
-                        intakeSpecimenCycleHalf(14),
-
-                        // Scoring Specimen 5
-                        scoreSpecimenCycleHalf(15),
-
-                        // Park
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(16)),
-                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, false)
-                        )
-                        */
+                        new InstantCommand(() -> {
+                            for (PathChain path : paths) {
+                                new FollowPathCommand(robot.follower, path).setHoldEnd(true);
+                            }
+                        })
                 )
         );
 

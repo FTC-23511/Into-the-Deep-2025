@@ -16,10 +16,13 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT
 import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_HOLD_SPEED;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.LOW_BUCKET_HEIGHT;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_SLIDES_EXTENSION;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.autoEndPose;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+
+import android.transition.Slide;
 
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -214,7 +217,21 @@ public class SoloTeleOp extends CommandOpMode {
 
         operator.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whenPressed(
                 new UninterruptibleCommand(
-                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1500)
+                        new ConditionalCommand(
+                                new SequentialCommandGroup(
+                                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
+                                        new WaitCommand(300),
+                                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1500)
+                                ),
+                                new InstantCommand(),
+                                () -> robot.deposit.target == HIGH_BUCKET_HEIGHT
+                        )
+                )
+        );
+
+        operator.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
+                new UninterruptibleCommand(
+                        new SetDeposit(robot, DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1500)
                 )
         );
 
