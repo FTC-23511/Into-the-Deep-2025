@@ -14,7 +14,6 @@ import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
-import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.DashboardPoseTracker;
@@ -26,22 +25,19 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
-import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
 import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
-import org.firstinspires.ftc.teamcode.commandbase.Intake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
-import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 import java.util.ArrayList;
 
 @Config
-    @Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+    @Autonomous(name = "Beans (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
 
-public class QuesoPath extends CommandOpMode {
+public class Beans extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
     private ElapsedTime timer;
 
@@ -381,12 +377,47 @@ public class QuesoPath extends CommandOpMode {
                 new RunCommand(() -> robot.follower.update()),
 
                 new SequentialCommandGroup(
-                        new InstantCommand(() -> {
-                            for (PathChain path : paths) {
-                                new FollowPathCommand(robot.follower, path).setHoldEnd(true);
-                            }
-                        })
+                        new FollowPathCommand(robot.follower, paths.get(0)).setHoldEnd(true),
+        new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(2)).setHoldEnd(true),
+        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
+                new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true)
+,
+                new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true)
+,
+                new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true)
+,
+                new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true)
+,
+                new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true),
+                        new FollowPathCommand(robot.follower, paths.get(9)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(10)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(11)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(12)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(13)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(14)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(15)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(16)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(17)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(18)).setHoldEnd(true)
+,
+                        new FollowPathCommand(robot.follower, paths.get(19)).setHoldEnd(true)
+
+
+
+
+
                 )
+
         );
 
         dashboardPoseTracker = new DashboardPoseTracker(robot.poseUpdater);
