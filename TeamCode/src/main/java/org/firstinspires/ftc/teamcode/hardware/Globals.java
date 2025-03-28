@@ -28,7 +28,7 @@ public class Globals {
     public static Deposit.DepositPivotState depositInit;
 
     public static OpModeType opModeType;
-    public static AllianceColor allianceColor;
+    public static AllianceColor allianceColor = AllianceColor.BLUE;
     public static PoseLocationName poseLocationName;
 
     public static Pose subSample1 = new Pose(62.000, 93.700, Math.toRadians(90));
@@ -59,10 +59,10 @@ public class Globals {
 
     // Intake Pivot
     public static double INTAKE_PIVOT_TRANSFER_POS = 0.22;
-    public static double INTAKE_PIVOT_READY_TRANSFER_POS = 0.25;
+    public static double INTAKE_PIVOT_INSIDE_POS = 0.1;
     public static double INTAKE_PIVOT_INTAKE_POS = 0.735;
     public static double INTAKE_PIVOT_READY_INTAKE_POS = 0.54;
-    public static double INTAKE_PIVOT_HOVER_INTAKE_POS = 0.71;
+    public static double INTAKE_PIVOT_HOVER_INTAKE_POS = 0.72;
 
     // Intake Extendo
     public static double MAX_EXTENDO_EXTENSION = 525; // Previously 500

@@ -16,9 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
-import java.nio.file.Watchable;
-import java.util.function.BooleanSupplier;
-
 public class Intake extends SubsystemBase {
     private final Robot robot = Robot.getInstance();
     private final ElapsedTime reverseIntakeTimer = new ElapsedTime();
@@ -37,7 +34,7 @@ public class Intake extends SubsystemBase {
         INTAKE,
         INTAKE_READY,
         TRANSFER,
-        TRANSFER_READY,
+        INSIDE,
         HOVER
     }
 
@@ -108,9 +105,9 @@ public class Intake extends SubsystemBase {
                 robot.rightIntakePivot.setPosition(INTAKE_PIVOT_TRANSFER_POS);
                 break;
 
-            case TRANSFER_READY:
-                robot.leftIntakePivot.setPosition(INTAKE_PIVOT_READY_TRANSFER_POS);
-                robot.rightIntakePivot.setPosition(INTAKE_PIVOT_READY_TRANSFER_POS);
+            case INSIDE:
+                robot.leftIntakePivot.setPosition(INTAKE_PIVOT_INSIDE_POS);
+                robot.rightIntakePivot.setPosition(INTAKE_PIVOT_INSIDE_POS);
                 break;
 
             case INTAKE:
@@ -184,7 +181,7 @@ public class Intake extends SubsystemBase {
                                                 new WaitCommand(125)
                                         ).schedule(false);
                                     } else {
-                                        new SetIntake(robot, TRANSFER_READY, HOLD, 0, false).schedule(false);
+                                        new SetIntake(robot, INSIDE, HOLD, 0, false).schedule(false);
                                     }
                                 }
                             } else {
@@ -214,7 +211,7 @@ public class Intake extends SubsystemBase {
                     break;
                 // No point of setting intakeMotor to 0 again
             }
-        } else if (intakePivotState.equals(TRANSFER) || intakePivotState.equals(TRANSFER_READY)) {
+        } else if (intakePivotState.equals(TRANSFER) || intakePivotState.equals(INSIDE)) {
             setActiveIntake(HOLD);
         }
     }

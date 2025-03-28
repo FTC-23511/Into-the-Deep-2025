@@ -4,8 +4,9 @@ import static org.firstinspires.ftc.teamcode.commandbase.Deposit.DepositPivotSta
 import static org.firstinspires.ftc.teamcode.commandbase.Deposit.depositPivotState;
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.FRONT_HIGH_SPECIMEN_HEIGHT;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.SLIDES_PIVOT_READY_EXTENSION;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.autoEndPose;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
@@ -24,13 +25,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
+import com.seattlesolvers.solverslib.command.ParallelRaceGroup;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.WaitCommand;
+import com.seattlesolvers.solverslib.command.WaitUntilCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
-import org.firstinspires.ftc.teamcode.commandbase.Drive;
+import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
+import org.firstinspires.ftc.teamcode.commandbase.commands.HoldPointCommand;
+import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
@@ -38,7 +43,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import java.util.ArrayList;
 
 @Config
-    @Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
 
 public class Queso extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
@@ -66,7 +71,7 @@ public class Queso extends CommandOpMode {
                                         new Point(42.000, 66.250, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Drive to first sweep position for sample pushing
@@ -79,8 +84,7 @@ public class Queso extends CommandOpMode {
                                         new Point(30.946, 42.925, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(-65))
-                        .setReversed(true)
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(145))
                         .build());
 
         paths.add(
@@ -93,7 +97,7 @@ public class Queso extends CommandOpMode {
                                         new Point(28.451, 36.936, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-65), Math.toRadians(-140))
+                        .setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(40))
                         .build());
 
         paths.add(
@@ -106,7 +110,7 @@ public class Queso extends CommandOpMode {
                                         new Point(31.945, 31.445, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-140), Math.toRadians(-65))
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(145))
                         .build());
 
         paths.add(
@@ -119,7 +123,7 @@ public class Queso extends CommandOpMode {
                                         new Point(27.452, 28.451, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-65), Math.toRadians(-140))
+                        .setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(40))
                         .build());
 
         paths.add(
@@ -132,7 +136,7 @@ public class Queso extends CommandOpMode {
                                         new Point(31.945, 24.458, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-140), Math.toRadians(-65))
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(145))
                         .build());
 
         paths.add(
@@ -145,7 +149,7 @@ public class Queso extends CommandOpMode {
                                         new Point(25.955, 23.709, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-65), Math.toRadians(180))
+                        .setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(0))
                         .build());
 
         paths.add(
@@ -158,8 +162,7 @@ public class Queso extends CommandOpMode {
                                         new Point(14.000, 32.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
-                        .build());
+                        .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0)).build());
 
         paths.add(
                 // Second specimen intake (also move after minus few inches from specimen intake)
@@ -168,11 +171,11 @@ public class Queso extends CommandOpMode {
                                 // Line 9
                                 new BezierLine(
                                         new Point(14.000, 32.000, Point.CARTESIAN),
-                                        new Point(7.500, 32.000, Point.CARTESIAN)
+                                        new Point(7.000, 32.000, Point.CARTESIAN)
                                 )
                         )
 
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Second specimen scoring
@@ -185,7 +188,7 @@ public class Queso extends CommandOpMode {
                                         new Point(42.000, 70.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Third specimen intake
@@ -198,7 +201,7 @@ public class Queso extends CommandOpMode {
                                         new Point(14.000, 32.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Third specimen scoring
@@ -206,12 +209,12 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 12
                                 new BezierCurve(
-                                        new Point(14.000, 32.000, Point.CARTESIAN),
+                                        new Point(7.500, 32.000, Point.CARTESIAN),
                                         new Point(20.000, 56.000, Point.CARTESIAN),
                                         new Point(42.000, 68.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Fourth specimen intake
@@ -224,7 +227,7 @@ public class Queso extends CommandOpMode {
                                         new Point(14.000, 32.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Fourth specimen scoring
@@ -232,12 +235,12 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 14
                                 new BezierCurve(
-                                        new Point(14.000, 32.000, Point.CARTESIAN),
+                                        new Point(7.500, 32.000, Point.CARTESIAN),
                                         new Point(20.000, 56.000, Point.CARTESIAN),
                                         new Point(42.000, 67.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Fifth specimen intake
@@ -250,7 +253,7 @@ public class Queso extends CommandOpMode {
                                         new Point(14.000, 32.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Fifth specimen scoring
@@ -258,12 +261,12 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 16
                                 new BezierCurve(
-                                        new Point(14.000, 32.000, Point.CARTESIAN),
+                                        new Point(7.500, 32.000, Point.CARTESIAN),
                                         new Point(20.000, 56.000, Point.CARTESIAN),
                                         new Point(42.000, 65.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(0)).build());
 
         paths.add(
                 // Intake Sample 1
@@ -276,7 +279,7 @@ public class Queso extends CommandOpMode {
                                         new Point(10.205, 48.529, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(270))
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(90))
                         .build());
 
         paths.add(
@@ -286,10 +289,10 @@ public class Queso extends CommandOpMode {
                                 // Line 18
                                 new BezierLine(
                                         new Point(10.205, 48.529, Point.CARTESIAN),
-                                        new Point(9.524, 126.765, Point.CARTESIAN)
+                                        new Point(7.937, 128.579, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(-60))
+                        .setConstantHeadingInterpolation(Math.toRadians(90))
                         .build());
 
         paths.add(
@@ -298,11 +301,11 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 19
                                 new BezierLine(
-                                        new Point(9.524, 126.765, Point.CARTESIAN),
-                                        new Point(10.205, 48.529, Point.CARTESIAN)
+                                        new Point(10.205, 48.529, Point.CARTESIAN),
+                                        new Point(7.937, 128.579, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-60), Math.toRadians(270))
+                        .setConstantHeadingInterpolation(Math.toRadians(90))
                         .build());
 
         paths.add(
@@ -312,21 +315,13 @@ public class Queso extends CommandOpMode {
                                 // Line 20
                                 new BezierLine(
                                         new Point(10.205, 48.529, Point.CARTESIAN),
-                                        new Point(9.524, 126.765, Point.CARTESIAN)
+                                        new Point(7.937, 128.579, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(-60))
+                        .setConstantHeadingInterpolation(Math.toRadians(90))
                         .build());
     }
 
-    public SequentialCommandGroup samplePush(int pathNum) {
-        return new SequentialCommandGroup(
-                new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.AUTO_PUSH)),
-                new WaitCommand(300),
-                new FollowPathCommand(robot.follower, paths.get(pathNum)).setHoldEnd(true),
-                new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN))
-        );
-    }
 
     public SequentialCommandGroup intakeSpecimenCycleHalf(int pathNum) {
         return new SequentialCommandGroup(
@@ -380,45 +375,58 @@ public class Queso extends CommandOpMode {
                 new RunCommand(() -> robot.follower.update()),
 
                 new SequentialCommandGroup(
+                        new InstantCommand(() -> robot.follower.setStartingPose(new Pose(6.125, 66.250, Math.toRadians(0)))),
+
                         // Specimen 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false).withTimeout(1000),
                                 new FollowPathCommand(robot.follower, paths.get(0))
                         ),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
+                        new InstantCommand(() -> robot.deposit.setClawOpen(true)).andThen(
+                                new WaitCommand(150)
+                        ),
 
                         // Sample 1
                         new ParallelCommandGroup(
-                                new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).beforeStarting(new WaitCommand(200)),
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 500, false).beforeStarting(new WaitCommand(750)),
+                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true),
+                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 330, false),
 
                                 new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true)
                         ),
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.STOP, robot.intake.target, false),
 
-                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true),
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 330, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(2)).setHoldEnd(true).beforeStarting(
+                                        new WaitCommand(100)
+                                )
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true)
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true)
+                        ),
 
-                        /*
-                        samplePush(2),
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true).beforeStarting(
+                                        new WaitCommand(100)
+                                )
+                        ),
 
-                        // Sample 2
-                        new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true),
-                        samplePush(4),
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true)
+                        ),
 
-                        // Sample 3
-                        new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true),
-                        new FollowPathCommand(robot.follower, paths.get(6)),
+
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true).beforeStarting(
+                                        new WaitCommand(100)
+                                )
+                        ),
+
+                        new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, false).alongWith(
+                                new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true)
+                        ),
 
                         // Intake Specimen 2
-                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true),
-
-                        new WaitCommand(250),
+                        new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).withTimeout(1000),
 
                         new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true).withTimeout(500),
                         new InstantCommand(() -> robot.deposit.setClawOpen(false)),
@@ -445,12 +453,44 @@ public class Queso extends CommandOpMode {
                         // Scoring Specimen 5
                         scoreSpecimenCycleHalf(15),
 
-                        // Park
+                        // Intake Sample 1
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(16)),
-                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, SLIDES_PIVOT_READY_EXTENSION + 50, false)
-                        )
-                        */
+                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).beforeStarting(
+                                        new WaitCommand(750)
+                                ),
+                                new FollowPathCommand(robot.follower, paths.get(16)).setHoldEnd(true),
+                                new WaitUntilCommand(() -> robot.intake.hasSample())
+                        ),
+
+                        // Score Sample 1
+                        new FollowPathCommand(robot.follower, paths.get(17)).setHoldEnd(true).alongWith(
+                                new SequentialCommandGroup(
+                                        new RealTransfer(robot),
+                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+                                )
+                        ),
+                        new InstantCommand(() -> robot.deposit.setClawOpen(true)),
+                        new WaitCommand(100),
+
+                        // Intake Sample 2
+                        new ParallelCommandGroup(
+                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).beforeStarting(
+                                        new WaitCommand(750)
+                                ),
+                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+                                new FollowPathCommand(robot.follower, paths.get(18)).setHoldEnd(true),
+                                new WaitUntilCommand(() -> robot.intake.hasSample())
+                        ),
+
+                        // Score Sample 2
+                        new FollowPathCommand(robot.follower, paths.get(19)).setHoldEnd(true).alongWith(
+                                new SequentialCommandGroup(
+                                        new RealTransfer(robot),
+                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+                                )
+                        ),
+                        new InstantCommand(() -> robot.deposit.setClawOpen(true))
                 )
         );
 
