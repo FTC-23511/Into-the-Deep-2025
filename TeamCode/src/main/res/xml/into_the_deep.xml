@@ -28,7 +28,7 @@
             <goBILDA5202SeriesMotor name="BL" port="2"/>
             <goBILDA5202SeriesMotor name="BR" port="3"/>
 
-            <Servo name="subPusher" port="0"/>
+            <Servo name="subPusher" port="5"/>
             <Servo name="leftDepositPivot" port="1"/>
             <Servo name="depositClaw" port="2"/>
             <Servo name="rightDepositPivot" port="3"/>

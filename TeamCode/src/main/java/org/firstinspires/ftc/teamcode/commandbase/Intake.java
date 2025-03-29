@@ -7,8 +7,11 @@ import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorTarge
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakeMotorState.*;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.command.WaitCommand;
+
+import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
 import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
@@ -177,9 +180,16 @@ public class Intake extends SubsystemBase {
                                 setActiveIntake(HOLD);
                                 if (opModeType.equals(OpModeType.TELEOP)) {
                                     if (sampleColorTarget.equals(ANY_COLOR)) {
-                                        new RealTransfer(robot).beforeStarting(
-                                                new WaitCommand(125)
-                                        ).schedule(false);
+                                        if (soloTeleOp) {
+                                            new SequentialCommandGroup(
+                                                    new RealTransfer(robot).beforeStarting(new WaitCommand(125)),
+                                                    new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false)
+                                            ).schedule(false);
+                                        } else {
+                                            new RealTransfer(robot).beforeStarting(
+                                                    new WaitCommand(125)
+                                            ).schedule(false);
+                                        }
                                     } else {
                                         new SetIntake(robot, INSIDE, HOLD, 0, false).schedule(false);
                                     }

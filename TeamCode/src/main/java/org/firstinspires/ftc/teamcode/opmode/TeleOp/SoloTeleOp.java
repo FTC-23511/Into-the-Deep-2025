@@ -156,13 +156,19 @@ public class SoloTeleOp extends CommandOpMode {
                 )
         );
 
-        // Reset CommandScheduler + make slides reached true
         driver.getGamepadButton(GamepadKeys.Button.PS).whenPressed(
-                new UninterruptibleCommand(
+                new ConditionalCommand(
                         new SequentialCommandGroup(
-                                new InstantCommand(super::reset),
-                                new InstantCommand(() -> robot.deposit.setSlideTarget(robot.deposit.getLiftScaledPosition()))
-                        )
+                                new InstantCommand(() -> robot.drive.setHang(Drive.HangState.EXTEND)),
+                                new WaitCommand(3000),
+                                new InstantCommand(() -> robot.drive.setHang(Drive.HangState.STOP)),
+                                new InstantCommand(() -> endgame = true)
+                        ),
+                        new SequentialCommandGroup(
+                                new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
+                                new SetDeposit(robot, DepositPivotState.SCORING, ENDGAME_ASCENT_HEIGHT, false)
+                        ),
+                        (() -> !endgame)
                 )
         );
 
@@ -309,12 +315,6 @@ public class SoloTeleOp extends CommandOpMode {
             timer = new ElapsedTime();
             gameTimer = new ElapsedTime();
         }
-        // Endgame/hang rumble after 105 seconds to notify robot.driver to hang
-        else if ((gameTimer.seconds() > 105) && (!endgame)) {
-            endgame = true;
-            gamepad1.rumble(500);
-            gamepad2.rumble(500);
-        }
 
         if (sampleColor.equals(SampleColorDetected.RED)) {
             gamepad1.setLedColor(1, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
@@ -335,7 +335,7 @@ public class SoloTeleOp extends CommandOpMode {
 
         // Pinpoint Field Centric Code
         double speedMultiplier = 0.35 + (1 - 0.35) * gamepad1.left_trigger;
-        robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y * speedMultiplier, -gamepad1.left_stick_x * speedMultiplier, -gamepad1.right_stick_x * speedMultiplier * 0.40, false);
+        robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y * speedMultiplier, -gamepad1.left_stick_x * speedMultiplier, -gamepad1.right_stick_x * speedMultiplier * 0.50, false);
         robot.follower.update();
 
         // Manual control of extendo

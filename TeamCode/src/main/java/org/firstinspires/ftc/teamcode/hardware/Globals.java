@@ -13,6 +13,8 @@ public class Globals {
         TELEOP
     }
 
+    public static boolean soloTeleOp = false;
+
     public enum AllianceColor {
         RED,
         BLUE
