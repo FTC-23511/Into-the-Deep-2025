@@ -43,7 +43,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
+@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "AAASoloTeleOp")
 
 public class Queso extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
@@ -278,7 +278,7 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 17
                                 new BezierCurve(
-                                        new Point(40.000, 72.000, Point.CARTESIAN),
+                                        new Point(42.000, 65.000, Point.CARTESIAN),
                                         new Point(9.071, 58.961, Point.CARTESIAN),
                                         new Point(8.844, 55.332, Point.CARTESIAN)
                                 )
@@ -305,8 +305,8 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 19
                                 new BezierLine(
-                                        new Point(10.205, 48.529, Point.CARTESIAN),
-                                        new Point(7.937, 128.579, Point.CARTESIAN)
+                                        new Point(7.937, 128.579, Point.CARTESIAN),
+                                        new Point(10.205, 48.529, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(90))
@@ -429,16 +429,10 @@ public class Queso extends CommandOpMode {
                         ),
 
                         new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 0, true),
-                        new WaitUntilCommand(() -> !robot.intake.hasSample()).withTimeout(350),
+                        new WaitUntilCommand(() -> !robot.intake.hasSample()).withTimeout(500),
                         new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, true),
 
-                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(false).alongWith(
-                                new SequentialCommandGroup(
-                                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 0, true),
-                                        new WaitUntilCommand(() -> !robot.intake.hasSample()).withTimeout(350),
-                                        new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, true)
-                                )
-                        ),
+                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(false),
 
                         new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).withTimeout(1000),
 

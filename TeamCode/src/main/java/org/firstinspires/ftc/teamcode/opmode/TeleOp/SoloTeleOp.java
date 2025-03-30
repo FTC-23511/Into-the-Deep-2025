@@ -25,6 +25,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
 import android.transition.Slide;
 
 import com.pedropathing.localization.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -49,7 +50,7 @@ import org.firstinspires.ftc.teamcode.commandbase.commands.attachSpecimen;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 
-@TeleOp
+@TeleOp(name = "AAASoloTeleOp")
 public class SoloTeleOp extends CommandOpMode {
     public GamepadEx driver;
     public GamepadEx operator;
