@@ -43,11 +43,15 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class Queso extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
     private ElapsedTime timer;
+    public static int EXTENSION_1 = 375;
+    public static int EXTENSION_2 = 343;
+    public static int EXTENSION_3 = 250;
+    public static int ANGLE_3 = 112;
 
     private final ArrayList<PathChain> paths = new ArrayList<>();
 
@@ -127,7 +131,7 @@ public class Queso extends CommandOpMode {
                         .build());
 
         paths.add(
-                // Drive to third sweep position for sample pushing
+                // Drive to third sweep position for sample intaking
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
@@ -136,7 +140,7 @@ public class Queso extends CommandOpMode {
                                         new Point(31.945, 24.458, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(145))
+                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(ANGLE_3))
                         .build());
 
         paths.add(
@@ -149,7 +153,7 @@ public class Queso extends CommandOpMode {
                                         new Point(25.955, 23.709, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(0))
+                        .setLinearHeadingInterpolation(Math.toRadians(ANGLE_3), Math.toRadians(0))
                         .build());
 
         paths.add(
@@ -276,7 +280,7 @@ public class Queso extends CommandOpMode {
                                 new BezierCurve(
                                         new Point(40.000, 72.000, Point.CARTESIAN),
                                         new Point(9.071, 58.961, Point.CARTESIAN),
-                                        new Point(10.205, 48.529, Point.CARTESIAN)
+                                        new Point(8.844, 55.332, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(90))
@@ -288,7 +292,7 @@ public class Queso extends CommandOpMode {
                         .addPath(
                                 // Line 18
                                 new BezierLine(
-                                        new Point(10.205, 48.529, Point.CARTESIAN),
+                                        new Point(8.844, 55.332, Point.CARTESIAN),
                                         new Point(7.937, 128.579, Point.CARTESIAN)
                                 )
                         )
@@ -380,7 +384,7 @@ public class Queso extends CommandOpMode {
                         // Specimen 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, DepositPivotState.FRONT_SPECIMEN_SCORING, FRONT_HIGH_SPECIMEN_HEIGHT, false).withTimeout(1000),
-                                new FollowPathCommand(robot.follower, paths.get(0))
+                                new FollowPathCommand(robot.follower, paths.get(0)).setHoldEnd(false)
                         ),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)).andThen(
                                 new WaitCommand(150)
@@ -389,45 +393,56 @@ public class Queso extends CommandOpMode {
                         // Sample 1
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true),
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 330, false),
+                                new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, EXTENSION_1, false),
 
                                 new FollowPathCommand(robot.follower, paths.get(1)).setHoldEnd(true)
                         ),
 
-                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 330, false).alongWith(
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, EXTENSION_1, false).alongWith(
                                 new FollowPathCommand(robot.follower, paths.get(2)).setHoldEnd(true).beforeStarting(
                                         new WaitCommand(100)
                                 )
                         ),
 
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, EXTENSION_2, false).alongWith(
                                 new FollowPathCommand(robot.follower, paths.get(3)).setHoldEnd(true)
                         ),
 
-                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, EXTENSION_2, false).alongWith(
                                 new FollowPathCommand(robot.follower, paths.get(4)).setHoldEnd(true).beforeStarting(
                                         new WaitCommand(100)
                                 )
                         ),
 
-                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE_READY, Intake.IntakeMotorState.HOLD, EXTENSION_3, false).alongWith(
                                 new FollowPathCommand(robot.follower, paths.get(5)).setHoldEnd(true)
                         ),
 
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, EXTENSION_3, true),
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, EXTENSION_3 + 35, true),
+                        new WaitUntilCommand(() -> robot.intake.hasSample()).withTimeout(350),
 
-                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, 325, false).alongWith(
+                        new SetIntake(robot, Intake.IntakePivotState.HOVER, Intake.IntakeMotorState.STOP, EXTENSION_3 - 25, false).alongWith(
                                 new FollowPathCommand(robot.follower, paths.get(6)).setHoldEnd(true).beforeStarting(
                                         new WaitCommand(100)
                                 )
                         ),
 
-                        new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, false).alongWith(
-                                new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(true)
+                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 0, true),
+                        new WaitUntilCommand(() -> !robot.intake.hasSample()).withTimeout(350),
+                        new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, true),
+
+                        new FollowPathCommand(robot.follower, paths.get(7)).setHoldEnd(false).alongWith(
+                                new SequentialCommandGroup(
+                                        new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.REVERSE, 0, true),
+                                        new WaitUntilCommand(() -> !robot.intake.hasSample()).withTimeout(350),
+                                        new SetIntake(robot, Intake.IntakePivotState.INSIDE, Intake.IntakeMotorState.STOP, 0, true)
+                                )
                         ),
 
-                        // Intake Specimen 2
                         new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_INTAKE, 0, true).withTimeout(1000),
 
+                        // Intake Specimen 2
                         new FollowPathCommand(robot.follower, paths.get(8)).setHoldEnd(true).withTimeout(500),
                         new InstantCommand(() -> robot.deposit.setClawOpen(false)),
                         new WaitCommand(200),
@@ -457,7 +472,7 @@ public class Queso extends CommandOpMode {
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
                                 new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).beforeStarting(
-                                        new WaitCommand(750)
+                                        new WaitCommand(1750)
                                 ),
                                 new FollowPathCommand(robot.follower, paths.get(16)).setHoldEnd(true),
                                 new WaitUntilCommand(() -> robot.intake.hasSample())
@@ -467,30 +482,33 @@ public class Queso extends CommandOpMode {
                         new FollowPathCommand(robot.follower, paths.get(17)).setHoldEnd(true).alongWith(
                                 new SequentialCommandGroup(
                                         new RealTransfer(robot),
+                                        new WaitCommand(175),
                                         new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
                                 )
                         ),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
                         new WaitCommand(100),
-
-                        // Intake Sample 2
-                        new ParallelCommandGroup(
-                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).beforeStarting(
-                                        new WaitCommand(750)
-                                ),
-                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
-                                new FollowPathCommand(robot.follower, paths.get(18)).setHoldEnd(true),
-                                new WaitUntilCommand(() -> robot.intake.hasSample())
-                        ),
-
-                        // Score Sample 2
-                        new FollowPathCommand(robot.follower, paths.get(19)).setHoldEnd(true).alongWith(
-                                new SequentialCommandGroup(
-                                        new RealTransfer(robot),
-                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
-                                )
-                        ),
-                        new InstantCommand(() -> robot.deposit.setClawOpen(true))
+                        new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000)
+//
+//                        // Intake Sample 2
+//                        new ParallelCommandGroup(
+//                                new SetIntake(robot, Intake.IntakePivotState.INTAKE, Intake.IntakeMotorState.FORWARD, MAX_EXTENDO_EXTENSION, true).beforeStarting(
+//                                        new WaitCommand(1750)
+//                                ),
+//                                new SetDeposit(robot, DepositPivotState.MIDDLE_HOLD, 0, true).withTimeout(1000),
+//                                new FollowPathCommand(robot.follower, paths.get(18)).setHoldEnd(true),
+//                                new WaitUntilCommand(() -> robot.intake.hasSample())
+//                        ),
+//
+//                        // Score Sample 2
+//                        new FollowPathCommand(robot.follower, paths.get(19)).setHoldEnd(true).alongWith(
+//                                new SequentialCommandGroup(
+//                                        new RealTransfer(robot),
+//                                        new WaitCommand(175),
+//                                        new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false).withTimeout(1000)
+//                                )
+//                        ),
+//                        new InstantCommand(() -> robot.deposit.setClawOpen(true))
                 )
         );
 

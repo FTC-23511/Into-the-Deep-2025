@@ -32,7 +32,7 @@ public class Deposit extends SubsystemBase {
         TRANSFER,
         READY_TRANSFER,
         MIDDLE_HOLD,
-        AUTO_TOUCH_BAR
+        INSIDE
     }
     public static DepositPivotState depositPivotState;
 
@@ -139,10 +139,10 @@ public class Deposit extends SubsystemBase {
                 robot.rightDepositPivot.setPosition(DEPOSIT_PIVOT_MIDDLE_POS);
                 robot.depositWrist.setPosition(WRIST_MIDDLE_HOLD);
                 break;
-            case AUTO_TOUCH_BAR:
-                robot.leftDepositPivot.setPosition(DEPOSIT_PIVOT_AUTO_BAR_POS);
-                robot.rightDepositPivot.setPosition(DEPOSIT_PIVOT_AUTO_BAR_POS);
-                robot.depositWrist.setPosition(WRIST_AUTO_BAR);
+            case INSIDE:
+                robot.leftDepositPivot.setPosition(DEPOSIT_PIVOT_INSIDE_POS);
+                robot.rightDepositPivot.setPosition(DEPOSIT_PIVOT_INSIDE_POS);
+                robot.depositWrist.setPosition(WRIST_INSIDE);
                 break;
         }
         Deposit.depositPivotState = depositPivotState;

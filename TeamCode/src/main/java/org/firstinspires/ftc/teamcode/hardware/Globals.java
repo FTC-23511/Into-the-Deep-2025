@@ -73,7 +73,7 @@ public class Globals {
     public static double DEPOSIT_PIVOT_TRANSFER_POS = 0.81;
     public static double DEPOSIT_PIVOT_READY_TRANSFER_POS = 0.90;
     public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.7;
-    public static double DEPOSIT_PIVOT_AUTO_BAR_POS = 0.35;
+    public static double DEPOSIT_PIVOT_INSIDE_POS = 1.00;
     public static double DEPOSIT_PIVOT_SCORING_POS = 0.35;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.03;
     public static double DEPOSIT_PIVOT_SPECIMEN_BACK_INTAKE_POS = 0.83;
@@ -91,7 +91,7 @@ public class Globals {
 
     // Deposit Wrist
     public static double WRIST_SCORING = 0.45;
-    public static double WRIST_AUTO_BAR = 0.3;
+    public static double WRIST_INSIDE = 0.4;
     public static double WRIST_FRONT_SPECIMEN_SCORING = 0.60;
     public static double WRIST_BACK_SPECIMEN_SCORING = 0.43;
     public static double WRIST_FRONT_SPECIMEN_INTAKE = 0.3;

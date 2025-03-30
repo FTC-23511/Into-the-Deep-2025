@@ -250,7 +250,7 @@ public class BurritoBowl extends CommandOpMode {
 
                         new ParallelCommandGroup(
                                 new FollowPathCommand(robot.follower, paths.get(7)),
-                                new SetDeposit(robot, DepositPivotState.AUTO_TOUCH_BAR, 0, false).beforeStarting(new WaitCommand(300))
+                                new SetDeposit(robot, DepositPivotState.INSIDE, 0, false).beforeStarting(new WaitCommand(300))
                         )
                 )
         );

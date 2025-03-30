@@ -39,7 +39,7 @@ public class ServoOnlyTransfer extends CommandBase {
 
             timer.reset();
             index = 2;
-        } else if (index == 2 && timer.milliseconds() > 50) {
+        } else if (index == 2 && timer.milliseconds() > 200) {
             robot.deposit.setClawOpen(false);
 
             finished = true;

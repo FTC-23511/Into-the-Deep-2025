@@ -398,7 +398,7 @@ public class LifestyleBowl extends CommandOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(11)),
                                 new SequentialCommandGroup(
                                         new WaitCommand(300),
-                                        new SetDeposit(robot, DepositPivotState.AUTO_TOUCH_BAR, 0, false)
+                                        new SetDeposit(robot, DepositPivotState.INSIDE, 0, false)
                                 )
                         )
                 )

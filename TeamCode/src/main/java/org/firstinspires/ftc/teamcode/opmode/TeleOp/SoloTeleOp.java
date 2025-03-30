@@ -166,7 +166,7 @@ public class SoloTeleOp extends CommandOpMode {
                         ),
                         new SequentialCommandGroup(
                                 new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
-                                new SetDeposit(robot, DepositPivotState.SCORING, ENDGAME_ASCENT_HEIGHT, false)
+                                new SetDeposit(robot, DepositPivotState.INSIDE, ENDGAME_ASCENT_HEIGHT, false)
                         ),
                         (() -> !endgame)
                 )
