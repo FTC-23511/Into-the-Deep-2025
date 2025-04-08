@@ -172,7 +172,7 @@ public class Robot {
         deposit = new Deposit();
         drive = new Drive();
 
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap);
 
         FollowerConstants.useBrakeModeInTeleOp = false;
 

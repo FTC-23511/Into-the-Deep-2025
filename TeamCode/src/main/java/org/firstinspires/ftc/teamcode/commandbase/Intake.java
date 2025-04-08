@@ -182,7 +182,7 @@ public class Intake extends SubsystemBase {
                                     if (sampleColorTarget.equals(ANY_COLOR)) {
                                         if (soloTeleOp) {
                                             new SequentialCommandGroup(
-                                                    new RealTransfer(robot).beforeStarting(new WaitCommand(125)),
+                                                    new RealTransfer(robot).beforeStarting(new WaitCommand(175)),
                                                     new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false)
                                             ).schedule(false);
                                         } else {
