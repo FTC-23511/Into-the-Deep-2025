@@ -191,7 +191,7 @@ public class Intake extends SubsystemBase {
                                             ).schedule(false);
                                         }
                                     } else {
-                                        new SetIntake(robot, INSIDE, HOLD, 0, false).schedule(false);
+                                        new SetIntake(robot, TRANSFER, HOLD, 0, false).schedule(false);
                                     }
                                 }
                             } else {

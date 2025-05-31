@@ -72,7 +72,7 @@ public class SetIntake extends CommandBase {
                 case REVERSE:
                     return (robot.intake.extendoReached &&
                             (timer.milliseconds() > Math.abs(previousServoPos - currentServoPos) * INTAKE_PIVOT_MOVEMENT_TIME + REVERSE_TIME_MS))
-                            || !robot.intake.hasSample();
+                            && !robot.intake.hasSample();
             }
         }
 
