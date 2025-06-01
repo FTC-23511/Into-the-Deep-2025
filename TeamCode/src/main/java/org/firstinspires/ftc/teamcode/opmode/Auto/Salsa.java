@@ -35,7 +35,7 @@ import com.pedropathing.util.DashboardPoseTracker;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Salsa (4spec+0sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Salsa (4spec+0sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class Salsa extends CommandOpMode {
     private final Robot robot = Robot.getInstance();

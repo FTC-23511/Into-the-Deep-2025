@@ -43,7 +43,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "AAASoloTeleOp")
+@Autonomous(name = "Queso (5spec+2sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class Queso extends CommandOpMode {
     private final Robot robot = Robot.getInstance();

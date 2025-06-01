@@ -39,7 +39,7 @@ import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Burrito Bowl (0spec+4sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Burrito Bowl (0spec+4sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class BurritoBowl extends CommandOpMode {
     private final Robot robot = Robot.getInstance();

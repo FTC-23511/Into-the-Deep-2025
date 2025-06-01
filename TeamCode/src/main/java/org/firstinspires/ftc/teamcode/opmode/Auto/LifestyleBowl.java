@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "Lifestyle Bowl (0spec+6sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Lifestyle Bowl (0spec+6sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class LifestyleBowl extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
@@ -363,7 +363,7 @@ public class LifestyleBowl extends CommandOpMode {
                         new ParallelCommandGroup(
                                 new SetDeposit(robot, Deposit.DepositPivotState.SCORING, HIGH_BUCKET_HEIGHT, false),
                                 new SequentialCommandGroup(
-                                        new WaitCommand(400),
+                                        new WaitCommand(1),
                                         new ParallelCommandGroup(
                                                 new FollowPathCommand(robot.follower, paths.get(0)).setHoldEnd(true),
                                                 new SetIntake(robot, IntakePivotState.HOVER, IntakeMotorState.FORWARD, 190, false)
@@ -371,7 +371,6 @@ public class LifestyleBowl extends CommandOpMode {
                                 )
                         ),
                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
-                        new WaitCommand(200),
 
                         // Sample 2
                         intakeSampleCycleHalf(1),

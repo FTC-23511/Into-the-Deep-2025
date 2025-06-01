@@ -32,7 +32,7 @@ import com.pedropathing.util.DashboardPoseTracker;
 import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 
 @Config
-@Autonomous(name = "Burrito (1spec+3sample)", group = "Chipotle Menu", preselectTeleOp = "FullTeleOp")
+@Autonomous(name = "Burrito (1spec+3sample)", group = "Chipotle Menu", preselectTeleOp = "SoloTeleOp")
 
 public class Burrito extends CommandOpMode {
     private final Robot robot = Robot.getInstance();

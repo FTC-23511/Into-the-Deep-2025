@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7'
 
     // SolversLib
-    implementation "org.solverslib:core:0.2.5"
+    implementation "org.solverslib:core:0.2.7"
     implementation "org.solverslib:pedroPathing:0.2.5"
 
     // FTCLib

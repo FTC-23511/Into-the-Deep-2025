@@ -51,7 +51,7 @@ import org.firstinspires.ftc.teamcode.commandbase.commands.attachSpecimen;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 
-@TeleOp(name = "AAASoloTeleOp")
+@TeleOp(name = "SoloTeleOp")
 public class SoloTeleOp extends CommandOpMode {
     public GamepadEx driver;
     public GamepadEx operator;

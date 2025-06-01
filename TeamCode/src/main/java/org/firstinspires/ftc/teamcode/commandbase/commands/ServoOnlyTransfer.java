@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.commandbase.commands;
 
+import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.InstantCommand;
@@ -8,13 +10,14 @@ import com.seattlesolvers.solverslib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.commandbase.Deposit;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
+import org.firstinspires.ftc.teamcode.hardware.Globals;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 public class ServoOnlyTransfer extends CommandBase {
     private final Robot robot;
     private boolean finished = false;
     private int index = 0;
-    private ElapsedTime timer;
+    private final ElapsedTime timer;
 
     public ServoOnlyTransfer(Robot robot) {
         this.robot = robot;
@@ -42,12 +45,13 @@ public class ServoOnlyTransfer extends CommandBase {
         } else if (index == 2 && timer.milliseconds() > 200) {
             robot.deposit.setClawOpen(false);
 
+            timer.reset();
             finished = true;
         }
     }
 
     @Override
     public boolean isFinished() {
-        return finished;
+        return finished && (timer.milliseconds() >= 200 || opModeType.equals(Globals.OpModeType.TELEOP) );
     }
 }
