@@ -120,12 +120,12 @@ public class SoloTeleOp extends CommandOpMode {
         );
 
         // TO-DO: need to make into 1 method in Drive.java
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new ConditionalCommand(
-                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.OUT)),
-                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN)),
-                        () -> Drive.subPusherState.equals(Drive.SubPusherState.IN))
-        );
+//        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
+//                new ConditionalCommand(
+//                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.OUT)),
+//                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN)),
+//                        () -> Drive.subPusherState.equals(Drive.SubPusherState.IN))
+//        );
 
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
                 new ConditionalCommand(
@@ -144,7 +144,7 @@ public class SoloTeleOp extends CommandOpMode {
                                                 new InstantCommand(() -> robot.deposit.setClawOpen(false)).andThen(new WaitCommand(200))
                                         ),
                                 new SequentialCommandGroup(
-                                        new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_SCORING, BACK_HIGH_SPECIMEN_ATTACH_HEIGHT, false).withTimeout(400),
+                                        new SetDeposit(robot, DepositPivotState.BACK_SPECIMEN_SCORING, BACK_HIGH_SPECIMEN_ATTACH_HEIGHT, false).withTimeout(600),
                                         new InstantCommand(() -> robot.deposit.setClawOpen(true)),
                                         new WaitCommand(300),
                                         new SetDeposit(robot, DepositPivotState.FRONT_SPECIMEN_INTAKE, 0, true).withTimeout(1500)
@@ -191,6 +191,13 @@ public class SoloTeleOp extends CommandOpMode {
                 )
         );
 
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> robot.drive.setHang(Drive.HangState.RETRACT)),
+                        new SetDeposit(robot, DepositPivotState.INSIDE, ENDGAME_ASCENT_HEIGHT, false)
+                )
+        );
+
         /* Untested xTeleOp Spec Automation
         operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
                 new UninterruptibleCommand(
@@ -231,21 +238,11 @@ public class SoloTeleOp extends CommandOpMode {
             gameTimer = new ElapsedTime();
         }
 
-        if (sampleColor.equals(SampleColorDetected.RED)) {
-            gamepad1.setLedColor(1, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
-        } else if (sampleColor.equals(SampleColorDetected.BLUE)) {
-            gamepad1.setLedColor(0, 0, 1, Gamepad.LED_DURATION_CONTINUOUS);
-        } else if (sampleColor.equals(SampleColorDetected.YELLOW)) {
-            gamepad1.setLedColor(1, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
-        } else {
-            gamepad1.setLedColor(0, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
-        }
-
         // purple is sample scoring (default), green is spec scoring
         if (Intake.sampleColorTarget.equals(SampleColorTarget.ANY_COLOR)) {
-            gamepad2.setLedColor(0, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
+            gamepad1.setLedColor(0, 1, 0, Gamepad.LED_DURATION_CONTINUOUS);
         } else {
-            gamepad2.setLedColor(1, 0, 1, Gamepad.LED_DURATION_CONTINUOUS);
+            gamepad1.setLedColor(1, 0, 1, Gamepad.LED_DURATION_CONTINUOUS);
         }
 
         // Pinpoint Field Centric Code

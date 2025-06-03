@@ -75,7 +75,7 @@ public class Globals {
     public static double DEPOSIT_PIVOT_MIDDLE_POS = 0.7;
     public static double DEPOSIT_PIVOT_INSIDE_POS = 1.00;
     public static double DEPOSIT_PIVOT_SCORING_POS = 0.35;
-    public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.03;
+    public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_INTAKE_POS = 0.05;
     public static double DEPOSIT_PIVOT_SPECIMEN_BACK_INTAKE_POS = 0.83;
     public static double DEPOSIT_PIVOT_SPECIMEN_FRONT_SCORING_POS = 0.20;
     public static double DEPOSIT_PIVOT_SPECIMEN_BACK_SCORING_POS = 0.71;
@@ -107,7 +107,7 @@ public class Globals {
     public static double HIGH_BUCKET_HEIGHT = 2000;
     public static double FRONT_HIGH_SPECIMEN_HEIGHT = 1065;
     public static double BACK_HIGH_SPECIMEN_HEIGHT = 850;
-    public static double BACK_HIGH_SPECIMEN_ATTACH_HEIGHT = 1400;
+    public static double BACK_HIGH_SPECIMEN_ATTACH_HEIGHT = 1450;
     public static double AUTO_ASCENT_HEIGHT = 800;
     public static double ENDGAME_ASCENT_HEIGHT = 1300;
 
