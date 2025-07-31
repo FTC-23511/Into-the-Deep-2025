@@ -331,9 +331,35 @@ public class EventTeleOp extends CommandOpMode {
         }
 
         // Pinpoint Field Centric Code
-        double speedMultiplier = 0.35;
-        robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y * speedMultiplier, -gamepad1.left_stick_x * speedMultiplier, -gamepad1.right_stick_x * speedMultiplier, false);
-        robot.follower.update();
+//        double speedMultiplier = 0.35;
+//        robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y * speedMultiplier, -gamepad1.left_stick_x * speedMultiplier, -gamepad1.right_stick_x * speedMultiplier, false);
+//        robot.follower.update();
+
+        // Control Hub IMU Field Centric Code
+
+        double speedMultiplier = 0.35 + (0.65 * driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+
+        double y = -driver.getLeftY();
+        double x = driver.getLeftX();
+        double rx = driver.getRightX();
+
+        double botHeading = robot.getYawDegrees();
+
+        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+        rotX = rotX * 1.1;
+
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+        double frontLeftPower = (rotY + rotX + rx) / denominator;
+        double backLeftPower = (rotY - rotX + rx) / denominator;
+        double frontRightPower = (rotY - rotX - rx) / denominator;
+        double backRightPower = (rotY + rotX - rx) / denominator;
+
+        robot.leftFront.setPower(frontLeftPower * speedMultiplier);
+        robot.leftBack.setPower(backLeftPower * speedMultiplier);
+        robot.rightFront.setPower(frontRightPower * speedMultiplier);
+        robot.rightBack.setPower(backRightPower * speedMultiplier);
 
         // Manual control of extendo
 //        if (gamepad1.right_trigger > 0.01 &&
