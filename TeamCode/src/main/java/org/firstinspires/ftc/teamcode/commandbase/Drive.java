@@ -58,10 +58,8 @@ public class Drive extends SubsystemBase {
     public void setGearbox(GearboxState gearboxState) {
         switch (gearboxState) {
             case HANG_GEAR:
-                robot.gearboxSwitcher.setPosition(HANG_GEAR_POS);
                 break;
             case DEPOSIT_GEAR:
-                robot.gearboxSwitcher.setPosition(DEPOSIT_GEAR_POS);
                 break;
         }
 

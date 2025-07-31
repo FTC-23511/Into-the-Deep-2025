@@ -58,7 +58,6 @@ public class Robot {
     public SolversServo depositClaw;
     public SolversServo depositWrist;
 
-    public SolversServo gearboxSwitcher;
     public SolversServo subPusher;
 
     public SolversCRServo leftHang;
@@ -142,7 +141,6 @@ public class Robot {
         depositWrist = new SolversServo(hardwareMap.get(Servo.class, "depositWrist"), 0.01);
         leftHang = new SolversCRServo(hardwareMap.get(CRServo.class, "leftHang"), 0.01);
         rightHang = new SolversCRServo(hardwareMap.get(CRServo.class, "rightHang"), 0.01);
-        gearboxSwitcher = new SolversServo(hardwareMap.get(Servo.class, "gearboxSwitcher"), 0.01);
         subPusher = new SolversServo(hardwareMap.get(Servo.class, "subPusher"), 0.01);
 
         leftIntakePivot.setDirection(Servo.Direction.REVERSE);
