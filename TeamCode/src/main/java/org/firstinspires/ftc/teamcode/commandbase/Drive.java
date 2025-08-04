@@ -15,11 +15,6 @@ public class Drive extends SubsystemBase {
         STOP
     }
 
-    public enum GearboxState {
-        HANG_GEAR,
-        DEPOSIT_GEAR
-    }
-
     public enum SubPusherState {
         IN,
         OUT,
@@ -27,12 +22,10 @@ public class Drive extends SubsystemBase {
     }
 
     public static HangState hangState;
-    public static GearboxState gearboxState;
     public static SubPusherState subPusherState = SubPusherState.IN;
 
     public void init() {
         setHang(HangState.STOP);
-        setGearbox(GearboxState.DEPOSIT_GEAR);
         setSubPusher(SubPusherState.IN);
     }
 
@@ -53,17 +46,6 @@ public class Drive extends SubsystemBase {
         }
 
         Drive.hangState = hangState;
-    }
-
-    public void setGearbox(GearboxState gearboxState) {
-        switch (gearboxState) {
-            case HANG_GEAR:
-                break;
-            case DEPOSIT_GEAR:
-                break;
-        }
-
-        Drive.gearboxState = gearboxState;
     }
 
     public void setSubPusher(SubPusherState subPusherState) {

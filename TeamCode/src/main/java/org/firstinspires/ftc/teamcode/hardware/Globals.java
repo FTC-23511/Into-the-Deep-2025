@@ -115,10 +115,6 @@ public class Globals {
     public static double LEFT_HANG_FULL_POWER = 0.9;
     public static double RIGHT_HANG_FULL_POWER = 1.0;
 
-    // Gearbox Switcher Servo
-    public static double HANG_GEAR_POS = 0.0;
-    public static double DEPOSIT_GEAR_POS = 0.0;
-
     // Sub Pusher / Sweeper Servo
     public static double SUB_PUSHER_OUT = 0.54;
     public static double SUB_PUSHER_IN = 0.08;
