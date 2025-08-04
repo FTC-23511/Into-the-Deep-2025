@@ -39,12 +39,9 @@
         </LynxModule>
 
         <ServoHub name="Servo Hub 3" port="3">
-<<<<<<< Updated upstream
             <ContinuousRotationServo name="leftHang" port="0"/>
             <Servo name="depositWrist" port="4"/>
             <ContinuousRotationServo name="rightHang" port="5"/>
-=======
->>>>>>> Stashed changes
         </ServoHub>
     </LynxUsbDevice>
 </Robot>

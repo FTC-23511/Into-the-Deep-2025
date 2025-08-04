@@ -141,10 +141,7 @@ public class Robot {
         depositWrist = new SolversServo(hardwareMap.get(Servo.class, "depositWrist"), 0.01);
         leftHang = new SolversCRServo(hardwareMap.get(CRServo.class, "leftHang"), 0.01);
         rightHang = new SolversCRServo(hardwareMap.get(CRServo.class, "rightHang"), 0.01);
-<<<<<<< Updated upstream
         subPusher = new SolversServo(hardwareMap.get(Servo.class, "subPusher"), 0.01);
-=======
->>>>>>> Stashed changes
 
         leftIntakePivot.setDirection(Servo.Direction.REVERSE);
         leftDepositPivot.setDirection(Servo.Direction.REVERSE);
