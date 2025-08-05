@@ -1,54 +1,22 @@
 package org.firstinspires.ftc.teamcode.opmode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.commandbase.Deposit.DepositPivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Deposit.depositPivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakeMotorState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakePivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorDetected;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorTarget;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakeMotorState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.sampleColor;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.BACK_HIGH_SPECIMEN_ATTACH_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.BACK_HIGH_SPECIMEN_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.ENDGAME_ASCENT_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.FRONT_HIGH_SPECIMEN_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_HOLD_SPEED;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.LOW_BUCKET_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_SLIDES_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.autoEndPose;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
-
-import android.transition.Slide;
+import static org.firstinspires.ftc.teamcode.commandbase.Deposit.*;
+import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.pedropathing.localization.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.seattlesolvers.solverslib.command.CommandOpMode;
-import com.seattlesolvers.solverslib.command.ConditionalCommand;
-import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
-import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
-import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
-import com.seattlesolvers.solverslib.command.WaitCommand;
+import com.seattlesolvers.solverslib.command.*;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
-import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
-import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.UndoTransfer;
-import org.firstinspires.ftc.teamcode.commandbase.commands.attachSpecimen;
+import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 
@@ -121,14 +89,6 @@ public class SoloTeleOp extends CommandOpMode {
                 )
         );
 
-        // TO-DO: need to make into 1 method in Drive.java
-//        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-//                new ConditionalCommand(
-//                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.OUT)),
-//                        new InstantCommand(() -> robot.drive.setSubPusher(Drive.SubPusherState.IN)),
-//                        () -> Drive.subPusherState.equals(Drive.SubPusherState.IN))
-//        );
-
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
                 new ConditionalCommand(
                         new ConditionalCommand(
@@ -199,30 +159,6 @@ public class SoloTeleOp extends CommandOpMode {
                         new SetDeposit(robot, DepositPivotState.INSIDE, ENDGAME_ASCENT_HEIGHT, false)
                 )
         );
-
-        /* Untested xTeleOp Spec Automation
-        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new UninterruptibleCommand(
-                        new RepeatCommand(
-                        new SequentialCommandGroup(
-                                new InstantCommand(() -> robot.follower.setStartingPose(new Pose(6.25, 30, Math.toRadians(180)))),
-                                new FollowPathCommand(robot.follower,
-                                        robot.follower.pathBuilder()
-                                                .addPath(
-                                                        new BezierLine(
-                                                                new Point(robot.follower.getPose().getX(), robot.follower.getPose().getY(), Point.CARTESIAN),
-                                                                new Point(45.757, 69.084, Point.CARTESIAN)
-                                                        )
-                                                )
-                                                .setConstantHeadingInterpolation(Math.toRadians(0)).build(),
-                                        true
-                                )
-                        ))
-                ).andThen(
-                        new InstantCommand(() -> robot.follower.startTeleopDrive())
-                )
-        );
-        */
 
         super.run();
     }
