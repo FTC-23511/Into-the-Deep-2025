@@ -205,7 +205,7 @@ public class Robot {
     }
 
     public double getYawDegrees() {
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
     public double getPitchDegrees() {
         return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);

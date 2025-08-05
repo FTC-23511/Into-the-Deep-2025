@@ -339,7 +339,7 @@ public class EventTeleOp extends CommandOpMode {
 
         double speedMultiplier = 0.35 + (0.65 * driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
 
-        double y = -driver.getLeftY();
+        double y = driver.getLeftY();
         double x = driver.getLeftX();
         double rx = driver.getRightX();
 
@@ -404,6 +404,8 @@ public class EventTeleOp extends CommandOpMode {
         telemetryData.addData("intakePivotState", intakePivotState);
         telemetryData.addData("depositPivotState", depositPivotState);
         telemetryData.addData("Sigma", "Oscar");
+        telemetryData.addData("botHeading", botHeading);
+        telemetryData.addData("speedMultiplier", speedMultiplier);
 
         telemetryData.update(); // DO NOT REMOVE! Needed for telemetry
         timer.reset();
