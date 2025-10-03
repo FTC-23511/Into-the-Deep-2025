@@ -6,8 +6,8 @@
         <LynxModule name="Control Hub" port="173">
 
             <Servo name="leftIntakePivot" port="0"/>
-            <Servo name="rightIntakePivot" port="1"/>
-            <Servo name="subPusher" port="2"/>
+            <Servo name="rightIntakePivot" port="2"/>
+            <Servo name="subPusher" port="3"/>
 
 
             <goBILDA5202SeriesMotor name="liftTop" port="0"/>-->
@@ -36,14 +36,7 @@
             <Servo name="depositClaw" port="4"/>
             <Servo name="depositWrist" port="5"/>
             <ContinuousRotationServo name="leftHang" port="3"/>
-
-
         </LynxModule>
 
-        <ServoHub name="Servo Hub 3" port="3">
-            <ContinuousRotationServo name="leftHang" port="0"/>
-            <Servo name="depositWrist" port="4"/>
-            <ContinuousRotationServo name="rightHang" port="5"/>
-        </ServoHub>
     </LynxUsbDevice>
 </Robot>
