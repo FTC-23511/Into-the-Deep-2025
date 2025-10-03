@@ -5,9 +5,9 @@
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
 
-            <Servo name="rightIntakePivot" port="3"/>
-            <Servo name="leftIntakePivot" port="5"/>
-            <Servo name="subPusher" port="1"/>
+            <Servo name="leftIntakePivot" port="0"/>
+            <Servo name="rightIntakePivot" port="1"/>
+            <Servo name="subPusher" port="2"/>
 
 
             <goBILDA5202SeriesMotor name="liftTop" port="0"/>-->
@@ -16,8 +16,8 @@
             <goBILDA5202SeriesMotor name="extension" port="3"/>-->
 
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
-            <RevColorSensorV3 name="colorSensor" port="0" bus="1"/>
-            <goBILDAPinpoint name="pinpoint" port="0" bus="2"/>
+            <RevColorSensorV3 name="colorSensor" port="0" bus="3"/>
+            <goBILDAPinpoint name="pinpoint" port="0" bus="1"/>
 
         </LynxModule>
     </LynxUsbDevice>
@@ -30,12 +30,12 @@
             <goBILDA5202SeriesMotor name="BL" port="2"/>
             <goBILDA5202SeriesMotor name="BR" port="3"/>
 
-            <ContinuousRotationServo name="rightHang" port="5"/>
-            <Servo name="leftDepositPivot" port="1"/>
-            <Servo name="depositClaw" port="2"/>
-            <Servo name="rightDepositPivot" port="3"/>
-            <Servo name="depositWrist" port="4"/>
-            <ContinuousRotationServo name="leftHang" port="0"/>
+            <ContinuousRotationServo name="rightHang" port="1"/>
+            <Servo name="leftDepositPivot" port="0"/>
+            <Servo name="rightDepositPivot" port="2"/>
+            <Servo name="depositClaw" port="4"/>
+            <Servo name="depositWrist" port="5"/>
+            <ContinuousRotationServo name="leftHang" port="3"/>
 
 
         </LynxModule>
