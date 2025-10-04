@@ -60,7 +60,7 @@ public class Globals {
     public static int BLUE_EDGE_CASE_THRESHOLD = 675;
 
     // Intake Pivot
-    public static double INTAKE_PIVOT_TRANSFER_POS = 0.22;
+    public static double INTAKE_PIVOT_TRANSFER_POS = 0.26;
     public static double INTAKE_PIVOT_INSIDE_POS = 0.1;
     public static double INTAKE_PIVOT_INTAKE_POS = 0.735;
     public static double INTAKE_PIVOT_READY_INTAKE_POS = 0.54;
@@ -96,7 +96,7 @@ public class Globals {
     public static double WRIST_BACK_SPECIMEN_SCORING = 0.43;
     public static double WRIST_FRONT_SPECIMEN_INTAKE = 0.3;
     public static double WRIST_BACK_SPECIMEN_INTAKE = 0.485;
-    public static double WRIST_TRANSFER = 0.19;
+    public static double WRIST_TRANSFER = 0.22;
     public static double WRIST_MIDDLE_HOLD = 0.20;
     public static double WRIST_READY_TRANSFER = 0.22;
 
