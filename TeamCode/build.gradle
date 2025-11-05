@@ -60,6 +60,12 @@ dependencies {
     implementation "org.solverslib:core:0.2.7"
     implementation "org.solverslib:pedroPathing:0.2.5"
 
+    // AdvantageScope Lite
+    implementation "page.j5155.AdvantageScope:lite:v26.0.0"
+
+    // FateWeaver
+    implementation "gay.zharel.fateweaver:ftc:0.3.3"
+
     // FTCLib
     // implementation 'org.ftclib.ftclib:core:2.1.1'
 
