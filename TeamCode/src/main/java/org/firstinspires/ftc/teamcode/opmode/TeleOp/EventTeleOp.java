@@ -18,9 +18,19 @@ import org.firstinspires.ftc.teamcode.commandbase.Intake;
 import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 @TeleOp(name = "EventTeleOp")
 public class EventTeleOp extends CommandOpMode {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(EventTeleOp.class);
+    private FileHandler logFileHandler;
+    private Logger logger;
     public GamepadEx driver;
     public GamepadEx operator;
 
@@ -127,8 +137,51 @@ public class EventTeleOp extends CommandOpMode {
         super.run();
     }
 
+    private boolean initLogger() {
+        try {
+            // Create a FileHandler to write logs to a file named "my_application.log"
+            // The 'true' argument means to append to the file if it exists,
+            // otherwise, a new file will be created.
+            logFileHandler = new FileHandler("/sdcard/FIRST/mecanum_logger.log", false);
+
+            // Set the formatter for the FileHandler. SimpleFormatter is a common choice.
+            SimpleFormatter formatter = new SimpleFormatter();
+            logFileHandler.setFormatter(formatter);
+
+            logger = Logger.getLogger(EventTeleOp.class.getName());
+            // Add the FileHandler to the logger.
+            logger.addHandler(logFileHandler);
+
+            // Optionally, set the logging level for the logger.
+            // Messages with a level higher than or equal to this will be logged.
+            logger.setLevel(Level.INFO);
+
+            // Log some messages
+            // TODO: to be removed later
+            logger.info("This is an informational message.");
+            logger.warning("A warning occurred in the application.");
+            logger.severe("A severe error has occurred!");
+            logger.log(Level.FINE, "This is a fine-grai'ned debug message."); // This won't be logged with INFO level
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void deinitLogger() {
+        logger.info("Deinitialize the logger");
+        logger = null;
+        logFileHandler.close();
+        logFileHandler = null;
+    }
+
     @Override
     public void run() {
+        if (!initLogger()) {
+            telemetry.addLine("Failed to initialize logger");
+        }
         // Keep all the has movement init for until when TeleOp starts
         // This is like the init but when the program is actually started
         if (timer == null) {
@@ -178,6 +231,26 @@ public class EventTeleOp extends CommandOpMode {
 
         // DO NOT REMOVE! Runs FTCLib Command Scheduler
         super.run();
+        //logging
+        logger.info("timer: " + timer.milliseconds());
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//        logger.info("extendoReached: " + robot.intake.extendoReached);
+//        logger.info("extendoRetracted: " + robot.intake.extendoRetracted);
+//        logger.info("slidesRetracted: " + robot.deposit.slidesRetracted);
+//        logger.info("slidesReached: " + robot.deposit.slidesReached);
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//
+//        logger.info("hasSample(): " + robot.intake.hasSample());
+//        logger.info("colorSensor getDistance: " + robot.colorSensor.getDistance(DistanceUnit.CM));
+//        logger.info("Intake sampleColor: " + Intake.sampleColor);
+//        logger.info("correctSampleDetected: " + Intake.correctSampleDetected());
+//        logger.info("autoEndPose: " +Intake.intakeMotorState);
+
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+
+        //logging
 
         telemetryData.addData("timer", timer.milliseconds());
         telemetryData.addData("autoEndPose", autoEndPose.toString());
@@ -219,6 +292,7 @@ public class EventTeleOp extends CommandOpMode {
 
     @Override
     public void end() {
+        deinitLogger();
         autoEndPose = robot.follower.getPose();
     }
 }
