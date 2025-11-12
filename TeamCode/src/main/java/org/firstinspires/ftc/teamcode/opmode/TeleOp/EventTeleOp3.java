@@ -27,8 +27,10 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
 import com.seattlesolvers.solverslib.command.WaitCommand;
+import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.geometry.Pose2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
@@ -40,9 +42,11 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 
 import gay.zharel.fateweaver.flight.FlightLogChannel;
+import gay.zharel.fateweaver.flight.FlightRecorder;
+import gay.zharel.fateweaver.schemas.LongSchema;
 
-@TeleOp(name = "EventTeleOplog")
-public class EventTeleOpLogging extends CommandOpMode {
+@TeleOp(name = "EventTeleOp3")
+public class EventTeleOp3 extends CommandOpMode {
     public GamepadEx driver;
     public GamepadEx operator;
 
@@ -55,11 +59,17 @@ public class EventTeleOpLogging extends CommandOpMode {
 
     private boolean endgame = false;
 
+    MecanumDrive drive;
     FlightLogChannel<Long> timestamps;
-    FlightLogChannel<Pose> poses;
+//    FlightLogChannel<Pose2d> poses;
+
 
     @Override
+
     public void initialize() {
+//        drive = new MecanumDrive(hardwareMap, new Pose2d(0.0, 0.0, 0.0));
+        timestamps = FlightRecorder.createChannel("TIMESTAMP", LongSchema.INSTANCE);
+//        poses = FlightRecorder.createChannel("Robot/Pose", Pose2d.class);
         // Must have for all opModes
         opModeType = OpModeType.TELEOP;
         depositInit = DepositPivotState.MIDDLE_HOLD;
@@ -152,6 +162,46 @@ public class EventTeleOpLogging extends CommandOpMode {
         super.run();
     }
 
+    private void logTelemetry() {
+//        drive.setDrivePowers(/* stuff */);
+//        PoseVelocity2d velocity = drive.updatePoseEstimate();
+
+        timestamps.put(System.nanoTime());
+//        FlightRecorder.write('Robot/Velocity', velocity);
+//        poses.put(drive.localizer.getPose());
+        //logging
+        timestamps.put((long)timer.milliseconds());
+
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//        logger.info("extendoReached: " + robot.intake.extendoReached);
+//        logger.info("extendoRetracted: " + robot.intake.extendoRetracted);
+//        logger.info("slidesRetracted: " + robot.deposit.slidesRetracted);
+//        logger.info("slidesReached: " + robot.deposit.slidesReached);
+//        logger.info("autoEndPose: " + autoEndPose.toString());
+//
+//        logger.info("hasSample(): " + robot.intake.hasSample());
+//        logger.info("colorSensor getDistance: " + robot.colorSensor.getDistance(DistanceUnit.CM));
+//        logger.info("Intake sampleColor: " + Intake.sampleColor);
+//        logger.info("correctSampleDetected: " + Intake.correctSampleDetected());
+//        logger.info("autoEndPose: " +Intake.intakeMotorState);
+//
+//        logger.info( "liftTop.getPower()"+ robot.liftTop.getPower());
+//        logger.info("extension.getPower()"+ robot.extension.getPower());
+//
+//        logger.info("getExtendoScaledPosition()"+ robot.intake.getExtendoScaledPosition());
+//        logger.info("getLiftScaledPosition()" + robot.deposit.getLiftScaledPosition());
+//
+//        logger.info("slides target"+ robot.deposit.target);
+//        logger.info("extendo target"+ robot.intake.target);
+//
+//        logger.info("intakePivotState"+ intakePivotState);
+//        logger.info("depositPivotState"+ depositPivotState);
+//        logger.info("Sigma"+ "Oscar");
+//        logger.info("botHeading"+ botHeading);
+//        logger.info("speedMultiplier"+ speedMultiplier);
+
+        //logging
+    }
     @Override
     public void run() {
         // Keep all the has movement init for until when TeleOp starts
@@ -203,6 +253,8 @@ public class EventTeleOpLogging extends CommandOpMode {
 
         // DO NOT REMOVE! Runs FTCLib Command Scheduler
         super.run();
+
+        logTelemetry();
 
         telemetryData.addData("timer", timer.milliseconds());
         telemetryData.addData("autoEndPose", autoEndPose.toString());

@@ -1,48 +1,36 @@
 package org.firstinspires.ftc.teamcode.opmode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.commandbase.Deposit.DepositPivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Deposit.depositPivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakeMotorState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.IntakePivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorDetected;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.SampleColorTarget;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.intakePivotState;
-import static org.firstinspires.ftc.teamcode.commandbase.Intake.sampleColor;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.ENDGAME_ASCENT_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.HIGH_BUCKET_HEIGHT;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.INTAKE_HOLD_SPEED;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.MAX_EXTENDO_EXTENSION;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.OpModeType;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.autoEndPose;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.depositInit;
-import static org.firstinspires.ftc.teamcode.hardware.Globals.opModeType;
+import static org.firstinspires.ftc.teamcode.commandbase.Deposit.*;
+import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
+import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.seattlesolvers.solverslib.command.CommandOpMode;
-import com.seattlesolvers.solverslib.command.ConditionalCommand;
-import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
-import com.seattlesolvers.solverslib.command.UninterruptibleCommand;
-import com.seattlesolvers.solverslib.command.WaitCommand;
+import com.seattlesolvers.solverslib.command.*;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
-import org.firstinspires.ftc.teamcode.commandbase.commands.RealTransfer;
-import org.firstinspires.ftc.teamcode.commandbase.commands.SetDeposit;
-import org.firstinspires.ftc.teamcode.commandbase.commands.SetIntake;
+import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
+import org.slf4j.LoggerFactory;
 
-import gay.zharel.fateweaver.flight.FlightLogChannel;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-@TeleOp(name = "EventTeleOplog")
-public class EventTeleOpLogging extends CommandOpMode {
+@TeleOp(name = "EventTeleOp with logging")
+public class EventTeleOp2 extends CommandOpMode {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(EventTeleOp.class);
+    private FileHandler logFileHandler;
+    private Logger logger;
     public GamepadEx driver;
     public GamepadEx operator;
 
@@ -54,9 +42,6 @@ public class EventTeleOpLogging extends CommandOpMode {
     private final Robot robot = Robot.getInstance();
 
     private boolean endgame = false;
-
-    FlightLogChannel<Long> timestamps;
-    FlightLogChannel<Pose> poses;
 
     @Override
     public void initialize() {
@@ -149,7 +134,53 @@ public class EventTeleOpLogging extends CommandOpMode {
                 )
         );
 
+        initLogger();
+
         super.run();
+    }
+
+    private boolean initLogger() {
+        if (logger != null) {
+            return true;
+        }
+
+        try {
+            // Create a FileHandler to write logs to a file named "my_application.log"
+            // The 'true' argument means to append to the file if it exists,
+            // otherwise, a new file will be created.
+            logFileHandler = new FileHandler("/sdcard/FIRST/test_logger.log", false);
+
+            // Set the formatter for the FileHandler. SimpleFormatter is a common choice.
+            SimpleFormatter formatter = new SimpleFormatter();
+            logFileHandler.setFormatter(formatter);
+
+            logger = Logger.getLogger(EventTeleOp.class.getName());
+            // Add the FileHandler to the logger.
+            logger.addHandler(logFileHandler);
+
+            // Optionally, set the logging level for the logger.
+            // Messages with a level higher than or equal to this will be logged.
+            logger.setLevel(Level.INFO);
+
+            // Log some messages
+            // TODO: to be removed later
+//            logger.info("This is an informational message.");
+//            logger.warning("A warning occurred in the application.");
+//            logger.severe("A severe error has occurred!");
+//            logger.log(Level.FINE, "This is a fine-grai'ned debug message."); // This won't be logged with INFO level
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void deinitLogger() {
+        logger.info("Deinitialize the logger");
+        logger = null;
+        logFileHandler.close();
+        logFileHandler = null;
     }
 
     @Override
@@ -203,6 +234,37 @@ public class EventTeleOpLogging extends CommandOpMode {
 
         // DO NOT REMOVE! Runs FTCLib Command Scheduler
         super.run();
+        //logging
+        logger.info("timer: " + timer.milliseconds());
+        logger.info("autoEndPose: " + autoEndPose.toString());
+        logger.info("extendoReached: " + robot.intake.extendoReached);
+        logger.info("extendoRetracted: " + robot.intake.extendoRetracted);
+        logger.info("slidesRetracted: " + robot.deposit.slidesRetracted);
+        logger.info("slidesReached: " + robot.deposit.slidesReached);
+        logger.info("autoEndPose: " + autoEndPose.toString());
+
+        logger.info("hasSample(): " + robot.intake.hasSample());
+        logger.info("colorSensor getDistance: " + robot.colorSensor.getDistance(DistanceUnit.CM));
+        logger.info("Intake sampleColor: " + Intake.sampleColor);
+        logger.info("correctSampleDetected: " + Intake.correctSampleDetected());
+        logger.info("autoEndPose: " +Intake.intakeMotorState);
+
+        logger.info( "liftTop.getPower()"+ robot.liftTop.getPower());
+        logger.info("extension.getPower()"+ robot.extension.getPower());
+
+        logger.info("getExtendoScaledPosition()"+ robot.intake.getExtendoScaledPosition());
+        logger.info("getLiftScaledPosition()" + robot.deposit.getLiftScaledPosition());
+
+        logger.info("slides target"+ robot.deposit.target);
+        logger.info("extendo target"+ robot.intake.target);
+
+        logger.info("intakePivotState"+ intakePivotState);
+        logger.info("depositPivotState"+ depositPivotState);
+        logger.info("Sigma"+ "Oscar");
+        logger.info("botHeading"+ botHeading);
+        logger.info("speedMultiplier"+ speedMultiplier);
+
+        //logging
 
         telemetryData.addData("timer", timer.milliseconds());
         telemetryData.addData("autoEndPose", autoEndPose.toString());
@@ -219,7 +281,7 @@ public class EventTeleOpLogging extends CommandOpMode {
         telemetryData.addData("intakeMotorState", Intake.intakeMotorState);
 
         telemetryData.addData("liftTop.getPower()", robot.liftTop.getPower());
-        telemetryData.addData("liftBottom.getPower()", robot.liftBottom.getPower());
+//        telemetryData.addData("liftBottom.getPower()", robot.liftBottom.getPower());
         telemetryData.addData("extension.getPower()", robot.extension.getPower());
 
         telemetryData.addData("getExtendoScaledPosition()", robot.intake.getExtendoScaledPosition());
@@ -244,6 +306,7 @@ public class EventTeleOpLogging extends CommandOpMode {
 
     @Override
     public void end() {
+        deinitLogger();
         autoEndPose = robot.follower.getPose();
     }
 }
