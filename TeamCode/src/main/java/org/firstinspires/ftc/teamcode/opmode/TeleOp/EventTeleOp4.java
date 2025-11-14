@@ -206,8 +206,7 @@ public class EventTeleOp4 extends CommandOpMode {
         // DO NOT REMOVE! Runs FTCLib Command Scheduler
         super.run();
 
-        FlightRecorder.INSTANCE.addData("timer", "init");
-        FlightRecorder.INSTANCE.update();
+        FlightRecorder.INSTANCE.addData("timer", timer.milliseconds());
         FlightRecorder.INSTANCE.addData("autoEndPose", autoEndPose.toString());
         FlightRecorder.INSTANCE.addData("extendoReached", robot.intake.extendoReached);
         FlightRecorder.INSTANCE.addData("extendoRetracted", robot.intake.extendoRetracted);
