@@ -6,12 +6,22 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+import gay.zharel.fateweaver.flight.FlightLogChannel;
+import gay.zharel.fateweaver.flight.FlightRecorder;
+import gay.zharel.fateweaver.schemas.LongSchema;
 
 @TeleOp
 public class MecanumTeleOp extends LinearOpMode {
+    MecanumDrive drive;
+    FlightLogChannel<Long> backRightMotorLog;
     @Override
     public void runOpMode() throws InterruptedException {
+
+        backRightMotorLog = FlightRecorder.createChannel("BACKRIGHTMOTOR", LongSchema.INSTANCE);
         // Declare our motors
         // Make sure your ID's match your configuration
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("FL");
@@ -51,7 +61,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 imu.resetYaw();
             }
 
-            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
 
             // Rotate the movement direction counter to the bot's rotation
             double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
@@ -74,6 +84,10 @@ public class MecanumTeleOp extends LinearOpMode {
             backRightMotor.setPower(backRightPower);
 
             // TODO: Add logging here
+            FlightRecorder.write("frontLeftMotor", frontLeftPower);
+            FlightRecorder.write("frontRightMotor", frontRightPower);
+            FlightRecorder.write("backLeftMotor", backLeftPower);
+            FlightRecorder.write("backRightMotor", backRightPower);
         }
     }
 }

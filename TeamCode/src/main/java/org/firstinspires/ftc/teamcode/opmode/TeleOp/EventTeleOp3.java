@@ -170,35 +170,34 @@ public class EventTeleOp3 extends CommandOpMode {
 //        FlightRecorder.write('Robot/Velocity', velocity);
 //        poses.put(drive.localizer.getPose());
         //logging
-        timestamps.put((long)timer.milliseconds());
+        FlightRecorder.INSTANCE.addData("timer", timer.milliseconds());
+        FlightRecorder.INSTANCE.update();
+        FlightRecorder.INSTANCE.addData("autoEndPose", autoEndPose.toString());
+        FlightRecorder.INSTANCE.addData("extendoReached: " , robot.intake.extendoReached);
+        FlightRecorder.INSTANCE.addData("extendoRetracted: " , robot.intake.extendoRetracted);
+        FlightRecorder.INSTANCE.addData("slidesRetracted: " , robot.deposit.slidesRetracted);
+        FlightRecorder.INSTANCE.addData("slidesReached: " , robot.deposit.slidesReached);
+        FlightRecorder.INSTANCE.addData("autoEndPose: " , autoEndPose.toString());
 
-//        logger.info("autoEndPose: " + autoEndPose.toString());
-//        logger.info("extendoReached: " + robot.intake.extendoReached);
-//        logger.info("extendoRetracted: " + robot.intake.extendoRetracted);
-//        logger.info("slidesRetracted: " + robot.deposit.slidesRetracted);
-//        logger.info("slidesReached: " + robot.deposit.slidesReached);
-//        logger.info("autoEndPose: " + autoEndPose.toString());
-//
-//        logger.info("hasSample(): " + robot.intake.hasSample());
-//        logger.info("colorSensor getDistance: " + robot.colorSensor.getDistance(DistanceUnit.CM));
-//        logger.info("Intake sampleColor: " + Intake.sampleColor);
-//        logger.info("correctSampleDetected: " + Intake.correctSampleDetected());
-//        logger.info("autoEndPose: " +Intake.intakeMotorState);
-//
-//        logger.info( "liftTop.getPower()"+ robot.liftTop.getPower());
-//        logger.info("extension.getPower()"+ robot.extension.getPower());
-//
-//        logger.info("getExtendoScaledPosition()"+ robot.intake.getExtendoScaledPosition());
-//        logger.info("getLiftScaledPosition()" + robot.deposit.getLiftScaledPosition());
-//
-//        logger.info("slides target"+ robot.deposit.target);
-//        logger.info("extendo target"+ robot.intake.target);
-//
-//        logger.info("intakePivotState"+ intakePivotState);
-//        logger.info("depositPivotState"+ depositPivotState);
-//        logger.info("Sigma"+ "Oscar");
-//        logger.info("botHeading"+ botHeading);
-//        logger.info("speedMultiplier"+ speedMultiplier);
+        FlightRecorder.INSTANCE.addData("hasSample(): " , robot.intake.hasSample());
+        FlightRecorder.INSTANCE.addData("colorSensor getDistance: " , robot.colorSensor.getDistance(DistanceUnit.CM));
+        FlightRecorder.INSTANCE.addData("Intake sampleColor: " , Intake.sampleColor);
+        FlightRecorder.INSTANCE.addData("correctSampleDetected: " , Intake.correctSampleDetected());
+        FlightRecorder.INSTANCE.addData("autoEndPose: " , Intake.intakeMotorState);
+
+        FlightRecorder.INSTANCE.addData( "liftTop.getPower()" , robot.liftTop.getPower());
+        FlightRecorder.INSTANCE.addData("extension.getPower()" , robot.extension.getPower());
+
+        FlightRecorder.INSTANCE.addData("getExtendoScaledPosition()" , robot.intake.getExtendoScaledPosition());
+        FlightRecorder.INSTANCE.addData("getLiftScaledPosition()" , robot.deposit.getLiftScaledPosition());
+
+        FlightRecorder.INSTANCE.addData("slides target" , robot.deposit.target);
+        FlightRecorder.INSTANCE.addData("extendo target" , robot.intake.target);
+
+        FlightRecorder.INSTANCE.addData("intakePivotState" , intakePivotState);
+        FlightRecorder.INSTANCE.addData("depositPivotState" , depositPivotState);
+        FlightRecorder.INSTANCE.addData("Sigma" , "Oscar");
+
 
         //logging
     }
