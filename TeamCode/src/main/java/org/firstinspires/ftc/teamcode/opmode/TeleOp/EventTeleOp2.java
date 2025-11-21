@@ -4,6 +4,8 @@ import static org.firstinspires.ftc.teamcode.commandbase.Deposit.*;
 import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
+import android.annotation.SuppressLint;
+
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -21,8 +23,11 @@ import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -139,6 +144,7 @@ public class EventTeleOp2 extends CommandOpMode {
         super.run();
     }
 
+
     private boolean initLogger() {
         if (logger != null) {
             return true;
@@ -150,9 +156,21 @@ public class EventTeleOp2 extends CommandOpMode {
             // otherwise, a new file will be created.
             logFileHandler = new FileHandler("/sdcard/FIRST/test_logger.log", false);
 
+            // Timestamp,object type,value
+            // 11:54:35,Double,0.5
+
             // Set the formatter for the FileHandler. SimpleFormatter is a common choice.
-            SimpleFormatter formatter = new SimpleFormatter();
-            logFileHandler.setFormatter(formatter);
+
+//            SimpleFormatter formatter = new SimpleFormatter();
+//            logFileHandler.setFormatter(formatter);
+
+
+            Logger logging = Logger.getLogger("CustomLogger");
+            ConsoleHandler handler = new ConsoleHandler();
+            handler.setFormatter(new CustomFormatter());
+            logging.addHandler(handler);
+
+
 
             logger = Logger.getLogger(EventTeleOp.class.getName());
             // Add the FileHandler to the logger.
@@ -175,6 +193,24 @@ public class EventTeleOp2 extends CommandOpMode {
 
         return true;
     }
+
+    public class CustomFormatter extends Formatter {
+        @Override
+        public String format(LogRecord record) {
+
+            // Convert millis → readable timestamp
+            @SuppressLint("DefaultLocale") String timestamp = String.format("%1$tF %1$tT", new java.util.Date(record.getMillis()));
+
+            // object type = log level (INFO, WARNING, etc.)
+            String objectType = record.getLevel().getName();
+
+            // value = the message
+            String value = record.getMessage();
+
+            // return as: Timestamp,object type,value
+            return timestamp + "," + objectType + "," + value + "\n";
+        }
+        }
 
     private void deinitLogger() {
         logger.info("Deinitialize the logger");

@@ -12,16 +12,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import gay.zharel.fateweaver.flight.FlightLogChannel;
 import gay.zharel.fateweaver.flight.FlightRecorder;
+import gay.zharel.fateweaver.schemas.DoubleSchema;
 import gay.zharel.fateweaver.schemas.LongSchema;
 
 @TeleOp
 public class MecanumTeleOp extends LinearOpMode {
     MecanumDrive drive;
-    FlightLogChannel<Long> backRightMotorLog;
+    FlightLogChannel<Double> backRightMotorLog;
     @Override
     public void runOpMode() throws InterruptedException {
 
-        backRightMotorLog = FlightRecorder.createChannel("BACKRIGHTMOTOR", LongSchema.INSTANCE);
+        backRightMotorLog = FlightRecorder.createChannel("BACKRIGHTMOTOR", DoubleSchema.INSTANCE);
         // Declare our motors
         // Make sure your ID's match your configuration
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("FL");
@@ -83,11 +84,19 @@ public class MecanumTeleOp extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
+
+            backRightMotorLog.put(backRightPower);
             // TODO: Add logging here
             FlightRecorder.write("frontLeftMotor", frontLeftPower);
             FlightRecorder.write("frontRightMotor", frontRightPower);
             FlightRecorder.write("backLeftMotor", backLeftPower);
             FlightRecorder.write("backRightMotor", backRightPower);
+            FlightRecorder.INSTANCE.update();
+            telemetry.addData("frontLeftMotor", frontLeftPower);
+            telemetry.addData("frontRightMotor", frontRightPower);
+            telemetry.addData("backLeftMotor", backLeftPower);
+            telemetry.addData("backRightMotor", backRightPower);
+            telemetry.update();
         }
     }
 }
