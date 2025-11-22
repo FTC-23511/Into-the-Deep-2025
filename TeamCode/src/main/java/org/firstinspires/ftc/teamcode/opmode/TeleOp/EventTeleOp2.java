@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.commandbase.Intake.*;
 import static org.firstinspires.ftc.teamcode.hardware.Globals.*;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,25 +18,17 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.commandbase.Drive;
 import org.firstinspires.ftc.teamcode.commandbase.Intake;
+import org.firstinspires.ftc.teamcode.commandbase.SolverLogger;
 import org.firstinspires.ftc.teamcode.commandbase.commands.*;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.TelemetryData;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+
 
 @TeleOp(name = "EventTeleOp with logging")
 public class EventTeleOp2 extends CommandOpMode {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(EventTeleOp.class);
-    private FileHandler logFileHandler;
-    private Logger logger;
+    SolverLogger robotLogging = new SolverLogger("EventTele0p2.log");
+
     public GamepadEx driver;
     public GamepadEx operator;
 
@@ -139,84 +132,10 @@ public class EventTeleOp2 extends CommandOpMode {
                 )
         );
 
-        initLogger();
+        boolean success = robotLogging.init();
+        telemetryData.addData("init logger: ", success);
 
         super.run();
-    }
-
-
-    private boolean initLogger() {
-        if (logger != null) {
-            return true;
-        }
-
-        try {
-            // Create a FileHandler to write logs to a file named "my_application.log"
-            // The 'true' argument means to append to the file if it exists,
-            // otherwise, a new file will be created.
-            logFileHandler = new FileHandler("/sdcard/FIRST/test_logger.log", false);
-
-            // Timestamp,object type,value
-            // 11:54:35,Double,0.5
-
-            // Set the formatter for the FileHandler. SimpleFormatter is a common choice.
-
-//            SimpleFormatter formatter = new SimpleFormatter();
-//            logFileHandler.setFormatter(formatter);
-
-
-            Logger logging = Logger.getLogger("CustomLogger");
-            ConsoleHandler handler = new ConsoleHandler();
-            handler.setFormatter(new CustomFormatter());
-            logging.addHandler(handler);
-
-
-
-            logger = Logger.getLogger(EventTeleOp.class.getName());
-            // Add the FileHandler to the logger.
-            logger.addHandler(logFileHandler);
-
-            // Optionally, set the logging level for the logger.
-            // Messages with a level higher than or equal to this will be logged.
-            logger.setLevel(Level.INFO);
-
-            // Log some messages
-            // TODO: to be removed later
-//            logger.info("This is an informational message.");
-//            logger.warning("A warning occurred in the application.");
-//            logger.severe("A severe error has occurred!");
-//            logger.log(Level.FINE, "This is a fine-grai'ned debug message."); // This won't be logged with INFO level
-        } catch (SecurityException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    public class CustomFormatter extends Formatter {
-        @Override
-        public String format(LogRecord record) {
-
-            // Convert millis → readable timestamp
-            @SuppressLint("DefaultLocale") String timestamp = String.format("%1$tF %1$tT", new java.util.Date(record.getMillis()));
-
-            // object type = log level (INFO, WARNING, etc.)
-            String objectType = record.getLevel().getName();
-
-            // value = the message
-            String value = record.getMessage();
-
-            // return as: Timestamp,object type,value
-            return timestamp + "," + objectType + "," + value + "\n";
-        }
-        }
-
-    private void deinitLogger() {
-        logger.info("Deinitialize the logger");
-        logger = null;
-        logFileHandler.close();
-        logFileHandler = null;
     }
 
     @Override
@@ -270,35 +189,9 @@ public class EventTeleOp2 extends CommandOpMode {
 
         // DO NOT REMOVE! Runs FTCLib Command Scheduler
         super.run();
-        //logging
-        logger.info("timer: " + timer.milliseconds());
-        logger.info("autoEndPose: " + autoEndPose.toString());
-        logger.info("extendoReached: " + robot.intake.extendoReached);
-        logger.info("extendoRetracted: " + robot.intake.extendoRetracted);
-        logger.info("slidesRetracted: " + robot.deposit.slidesRetracted);
-        logger.info("slidesReached: " + robot.deposit.slidesReached);
-        logger.info("autoEndPose: " + autoEndPose.toString());
 
-        logger.info("hasSample(): " + robot.intake.hasSample());
-        logger.info("colorSensor getDistance: " + robot.colorSensor.getDistance(DistanceUnit.CM));
-        logger.info("Intake sampleColor: " + Intake.sampleColor);
-        logger.info("correctSampleDetected: " + Intake.correctSampleDetected());
-        logger.info("autoEndPose: " +Intake.intakeMotorState);
 
-        logger.info( "liftTop.getPower()"+ robot.liftTop.getPower());
-        logger.info("extension.getPower()"+ robot.extension.getPower());
-
-        logger.info("getExtendoScaledPosition()"+ robot.intake.getExtendoScaledPosition());
-        logger.info("getLiftScaledPosition()" + robot.deposit.getLiftScaledPosition());
-
-        logger.info("slides target"+ robot.deposit.target);
-        logger.info("extendo target"+ robot.intake.target);
-
-        logger.info("intakePivotState"+ intakePivotState);
-        logger.info("depositPivotState"+ depositPivotState);
-        logger.info("Sigma"+ "Oscar");
-        logger.info("botHeading"+ botHeading);
-        logger.info("speedMultiplier"+ speedMultiplier);
+        robotLogging.log(speedMultiplier);
 
         //logging
 
@@ -342,7 +235,7 @@ public class EventTeleOp2 extends CommandOpMode {
 
     @Override
     public void end() {
-        deinitLogger();
+        robotLogging.deinit();
         autoEndPose = robot.follower.getPose();
     }
 }
